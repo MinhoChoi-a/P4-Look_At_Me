@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.example.lookatme.MainFragment"
+        android:label="Main Fragment"
+        tools:layout="@layout/main_fragment">
+        <action
+            android:id="@+id/action_to_editorFragment"
+            app:destination="@id/editorFragment" />
+        <action
+            android:id="@+id/action_to_displayFragment"
+            app:destination="@id/displayFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editorFragment"
+        android:name="com.example.lookatme.EditorFragment"
+        android:label="Editor Fragment"
+        tools:layout="@layout/editor_fragment">
+
+        <argument
+            android:name="noteid"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+    <fragment
+        android:id="@+id/displayFragment"
+        android:name="com.example.lookatme.DisplayFragment"
+        android:label="Display Fragment"
+        tools:layout="@layout/display_fragment">
+
+        <argument
+            android:name="noteid"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
+</navigation>
