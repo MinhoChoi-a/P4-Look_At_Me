@@ -52,4 +52,13 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    fun deleteNote(note: NoteEntity) {
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                database?.noteDao()?.deleteNote(note)
+            }
+        }
+    }
+
 }

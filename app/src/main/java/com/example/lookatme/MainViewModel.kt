@@ -22,7 +22,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 database?.noteDao()?.deleteNotes(selectedNotes)
             }
         }
-
     }
 
 }

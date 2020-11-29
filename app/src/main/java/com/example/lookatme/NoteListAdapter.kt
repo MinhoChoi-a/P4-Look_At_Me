@@ -33,7 +33,7 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
             root.setOnClickListener{
                 listener.editNote(note.id)
             }
-
+/**
             clickButtonToDelete.setOnClickListener {
                 if(selectedNotes.contains(note)) {
                     selectedNotes.remove(note)
@@ -53,7 +53,7 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
                     }
                     else {
                         R.drawable.ic_note
-                    })
+                    })*/
         }
     }
 

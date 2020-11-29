@@ -6,21 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/click_button_to_delete"
-        android:layout_width="72dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp"
-
-        android:clickable="true"
-        android:focusable="true"
-        app:fabSize="mini"
-
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toEndOf="@id/noteText"
-
-        app:srcCompat="@drawable/ic_check"         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/click_button_to_play"

@@ -2,10 +2,9 @@ package com.example.lookatme
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.os.Handler
+import android.os.Looper
+import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -14,6 +13,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.lookatme.data.NoteEntity
 import com.example.lookatme.databinding.EditorFragmentBinding
 
 class EditorFragment: Fragment() {
@@ -33,6 +33,7 @@ class EditorFragment: Fragment() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_check)
         }
+
         setHasOptionsMenu(true)
 
         requireActivity().title =
@@ -67,9 +68,16 @@ class EditorFragment: Fragment() {
         return binding.root
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        val menuId = R.menu.menu_delete
+        inflater.inflate(menuId, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId) {
             android.R.id.home -> saveAndReturn()
+            R.id.action_delete -> deleteAndReturn()
             else -> super.onOptionsItemSelected(item)
         }
     }
@@ -84,6 +92,17 @@ class EditorFragment: Fragment() {
         findNavController().navigateUp()
         return true
     }
+
+    private fun deleteAndReturn(): Boolean {
+
+        val note = viewModel?.currentNote?.value?: NoteEntity()
+
+        viewModel.deleteNote(note)
+
+        findNavController().navigateUp()
+        return true
+    }
+
 
     override fun onSaveInstanceState(outState: Bundle) {
         with(binding.editor) {
