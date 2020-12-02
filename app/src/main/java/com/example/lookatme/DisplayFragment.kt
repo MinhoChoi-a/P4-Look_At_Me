@@ -20,8 +20,6 @@ class DisplayFragment: Fragment() {
 
     private val args:DisplayFragmentArgs by navArgs()
 
-
-
     private lateinit var binding: DisplayFragmentBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -33,7 +31,11 @@ class DisplayFragment: Fragment() {
             it.setHomeAsUpIndicator(R.drawable.ic_check)
         }
 
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        (activity as AppCompatActivity).supportActionBar?.hide()
+
+        requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        requireActivity().requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         setHasOptionsMenu(true)
 
@@ -51,8 +53,8 @@ class DisplayFragment: Fragment() {
                 })
 
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
-            val savedString = savedInstanceState?.getString(NOTE_TEXT_KEY)
-            binding.displayText.setText(savedString ?: it.text)
+            binding.displayText.setText(it.text)
+            binding.displayText.isSelected = true
         })
 
         viewModel.getNoteById(args.noteid)
