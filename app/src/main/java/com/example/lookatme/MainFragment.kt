@@ -1,5 +1,6 @@
 package com.example.lookatme
 
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -27,6 +28,7 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
     ): View? {
 
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
         setHasOptionsMenu(true)
 
@@ -96,6 +98,11 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
 
     override fun editNote(noteId: Int) {
         val action = MainFragmentDirections.actionToEditorFragment((noteId))
+        findNavController().navigate(action)
+    }
+
+    override fun playNote(noteId: Int) {
+        var action = MainFragmentDirections.actionToDisplayFragment((noteId))
         findNavController().navigate(action)
     }
 

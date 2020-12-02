@@ -30,9 +30,14 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
         with(holder.binding) {
             noteText.text = note.text
 
-            root.setOnClickListener{
+            noteText.setOnClickListener {
                 listener.editNote(note.id)
             }
+
+            clickButtonToPlay.setOnClickListener {
+                listener.playNote(note.id)
+            }
+
 /**
             clickButtonToDelete.setOnClickListener {
                 if(selectedNotes.contains(note)) {
@@ -62,6 +67,7 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
 
     interface ListItemListener {
         fun editNote(noteId: Int)
+        fun playNote(noteId: Int)
         fun onItemSelectionChanged()
 
     }

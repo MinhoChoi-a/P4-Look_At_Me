@@ -1,6 +1,7 @@
 package com.example.lookatme
 
 import android.app.Activity
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,7 +21,6 @@ class EditorFragment: Fragment() {
 
     private lateinit var viewModel: EditorViewModel
 
-
     private val args:EditorFragmentArgs by navArgs()
 
     private lateinit var binding: EditorFragmentBinding
@@ -33,6 +33,7 @@ class EditorFragment: Fragment() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_check)
         }
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
         setHasOptionsMenu(true)
 
