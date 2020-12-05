@@ -5,16 +5,21 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lookatme.data.NoteEntity
+import com.example.lookatme.data.SetEntity
 import com.example.lookatme.databinding.EditorFragmentBinding
 
 class EditorFragment: Fragment() {
@@ -24,6 +29,8 @@ class EditorFragment: Fragment() {
     private val args:EditorFragmentArgs by navArgs()
 
     private lateinit var binding: EditorFragmentBinding
+
+    private lateinit var adapter:SetListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -44,10 +51,18 @@ class EditorFragment: Fragment() {
                 else {
                     "Edit Note"
                 }
+
         viewModel = ViewModelProvider(this).get(EditorViewModel::class.java)
 
         binding = EditorFragmentBinding.inflate(inflater, container, false)
         binding.editor.setText("")
+
+        with(binding.recyclerViewBackStyle) {
+            setHasFixedSize(true)
+            val divider = DividerItemDecoration(context, LinearLayoutManager(context).orientation
+            )
+            addItemDecoration(divider)
+        }
 
         requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
@@ -58,12 +73,25 @@ class EditorFragment: Fragment() {
                     }
                 })
 
+        viewModel.setList?.observe(viewLifecycleOwner, Observer {
+
+            adapter = SetListAdapter(it)
+            binding.recyclerViewBackStyle.adapter = adapter
+            binding.recyclerViewBackStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+
+            //val selectedNotes = savedInstanceState?.getParcelableArrayList<NoteEntity>(SELECTED_NOTES_KEY)
+
+            //adapter.selectedNotes.addAll(selectedNotes ?: emptyList())
+        })
+
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
             val savedString = savedInstanceState?.getString(NOTE_TEXT_KEY)
             val curusorPosition = savedInstanceState?.getInt(CURSOR_POSITION_KEY) ?: 0
             binding.editor.setText(savedString ?: it.text)
             binding.editor.setSelection(curusorPosition)
         })
+
         viewModel.getNoteById(args.noteid)
 
         return binding.root
@@ -87,7 +115,17 @@ class EditorFragment: Fragment() {
         val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
 
+        var selectedBack = adapter.getCheckedRB()
+
+        viewModel.findSetAndAddToNote(Integer.parseInt(selectedBack?.getTag().toString()))
+
         viewModel.currentNote.value?.text = binding.editor.text.toString()
+        viewModel.currentNote.value?.fontColor = "black"
+        viewModel.currentNote.value?.fontStyle = "Open sans"
+        //viewModel.currentNote.value?.backRes = selectedBack?.getTag().toString()
+        //viewModel.currentNote.value?.backType = 0
+
+        Log.i("current_note_res", viewModel.currentNote.value?.backRes.toString())
         viewModel.updateNote()
 
         findNavController().navigateUp()

@@ -37,6 +37,7 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
         binding = MainFragmentBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        viewModel.addDefaultSet()
 
         with(binding.recyclerView) {
             setHasFixedSize(true)
@@ -44,6 +45,8 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
             )
             addItemDecoration(divider)
         }
+
+        viewModel.checkSize()
 
         viewModel.noteList?.observe(viewLifecycleOwner, Observer {
 

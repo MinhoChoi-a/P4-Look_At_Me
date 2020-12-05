@@ -10,6 +10,8 @@
 
     <color name="transparent">#00000000</color>
 
+    <color name="fontColor">#000000</color>
+
     <color name="gradientStart">#F04393</color>
     <color name="gradientCenter">#FF7D5C</color>
     <color name="gradientEnd">#F9C449</color>
