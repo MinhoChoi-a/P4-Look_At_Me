@@ -62,7 +62,13 @@ class DisplayFragment: Fragment() {
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
             binding.displayText.setText(it.text)
 
-            Log.i("backtype", it.backType.toString())
+            Log.i("displayed_color", it.fontColor)
+
+            var font_id = resources.getIdentifier(it.fontColor,"color", activity?.packageName)
+
+            Log.i("displayed_color_id", font_id.toString())
+            Log.i("display_color_cide", R.color.second_c.toString())
+            binding.displayText?.setTextColor(font_id)
 
             if(it.backType == 1) {
                 val simple_id = resources.getIdentifier(it.backRes,"drawable", activity?.packageName)

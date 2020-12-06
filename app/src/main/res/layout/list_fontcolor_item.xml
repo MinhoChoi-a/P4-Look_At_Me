@@ -3,20 +3,25 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <RadioButton
         android:id="@+id/fontColor"
-        android:button="@color/fontColor"
-        android:width="100dp"
-        android:height="50dp"
-        android:layout_marginRight="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginRight="10dp"
+        android:width="100dp"
+        android:height="50dp"
+        android:checked="false"
+        android:ellipsize="none"
+        android:focusable="auto"
+        android:textColorHighlight="#AEACAC"
+        android:textColorLink="#000000"
+        android:textCursorDrawable="@color/black"
+        app:buttonTint="#000000"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="button"
-        />
+        tools:text="button" />
 
 </LinearLayout>

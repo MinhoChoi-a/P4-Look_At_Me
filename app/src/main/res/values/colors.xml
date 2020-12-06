@@ -9,8 +9,15 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="transparent">#00000000</color>
-
+    <color name="font_back">#83000000</color>
     <color name="fontColor">#000000</color>
+
+    <color name="first_c">#FF1B1E23</color>
+    <color name="second_c">#FFEFFD5F</color>
+    <color name="third_c">#FFFDE64B</color>
+    <color name="fourth_c">#FFF9A602</color>
+    <color name="fifth_c">#FFD30000</color>
+    <color name="sixth_c">#FF8D021F</color>
 
     <color name="gradientStart">#F04393</color>
     <color name="gradientCenter">#FF7D5C</color>

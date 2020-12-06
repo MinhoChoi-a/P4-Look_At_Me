@@ -32,6 +32,8 @@ class EditorFragment: Fragment() {
 
     private lateinit var adapter:SetListAdapter
 
+    private lateinit var fontAdapter:FontListAdapter
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         (activity as AppCompatActivity).supportActionBar?.let {
@@ -64,6 +66,13 @@ class EditorFragment: Fragment() {
             addItemDecoration(divider)
         }
 
+        with(binding.recyclerViewFontStyle) {
+            setHasFixedSize(true)
+            val divider = DividerItemDecoration(context, LinearLayoutManager(context).orientation
+            )
+            addItemDecoration(divider)
+        }
+
         requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
                 object: OnBackPressedCallback(true) {
@@ -74,16 +83,20 @@ class EditorFragment: Fragment() {
                 })
 
         viewModel.setList?.observe(viewLifecycleOwner, Observer {
-
-            adapter = SetListAdapter(it)
+            adapter = SetListAdapter(it, viewModel.currentNote)
             binding.recyclerViewBackStyle.adapter = adapter
             binding.recyclerViewBackStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
 
-            //val selectedNotes = savedInstanceState?.getParcelableArrayList<NoteEntity>(SELECTED_NOTES_KEY)
-
-            //adapter.selectedNotes.addAll(selectedNotes ?: emptyList())
         })
+
+        viewModel.fontList?.observe(viewLifecycleOwner, Observer {
+            fontAdapter = FontListAdapter(it, viewModel.currentNote)
+            binding.recyclerViewFontStyle.adapter = fontAdapter
+            binding.recyclerViewFontStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        })
+
+
 
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
             val savedString = savedInstanceState?.getString(NOTE_TEXT_KEY)
@@ -116,19 +129,22 @@ class EditorFragment: Fragment() {
         imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
 
         var selectedBack = adapter.getCheckedRB()
-
-        viewModel.findSetAndAddToNote(Integer.parseInt(selectedBack?.getTag().toString()))
+        var selectedFont = fontAdapter.getCheckedRBfont()
 
         viewModel.currentNote.value?.text = binding.editor.text.toString()
-        viewModel.currentNote.value?.fontColor = "black"
+        viewModel.currentNote.value?.fontColor = selectedFont?.getTag().toString()
+        Log.i("updated_font_color", viewModel.currentNote.value?.fontColor.toString())
+
         viewModel.currentNote.value?.fontStyle = "Open sans"
-        //viewModel.currentNote.value?.backRes = selectedBack?.getTag().toString()
-        //viewModel.currentNote.value?.backType = 0
+        viewModel.findSetAndAddToNote(Integer.parseInt(selectedBack?.getTag().toString()))
 
-        Log.i("current_note_res", viewModel.currentNote.value?.backRes.toString())
-        viewModel.updateNote()
+        Handler(Looper.getMainLooper()).postDelayed({
 
-        findNavController().navigateUp()
+            Log.i("current_note_res", viewModel.currentNote.value?.backRes.toString())
+            findNavController().navigateUp()
+
+        }, 100)
+
         return true
     }
 

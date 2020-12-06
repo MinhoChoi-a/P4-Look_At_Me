@@ -17,8 +17,14 @@ class DefaultSetProvider {
         )
 
         fun getFontColor() = arrayListOf(
-                "#1B1E23", "#FFFFF", "#EFFD5F", "#FDE64B", "F9A602",  "#D30000", "#8D021F"
+
+                FontEntity("black"),
+                FontEntity("white"),
+                FontEntity("second_c"),
+                FontEntity("third_c"),
+                FontEntity("fourth_c"),
+                FontEntity("fifth_c"),
+                FontEntity("sixth_c")
         )
     }
-
 }

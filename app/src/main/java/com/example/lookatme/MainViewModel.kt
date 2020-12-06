@@ -31,9 +31,15 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             withContext(Dispatchers.IO) {
                 val defaultSets = DefaultSetProvider.getSettings()
                 val countNum = database?.setDao()?.getCount()
+                val defaultFonts = DefaultSetProvider.getFontColor()
+                val countNumFonts = database?.fontDao()?.getCount()
 
                 if(countNum == 0) {
                 database?.setDao()?.insertAll(defaultSets) }
+
+                if(countNumFonts == 0) {
+                    database?.fontDao()?.insertAll(defaultFonts)
+                }
             }
         }
     }

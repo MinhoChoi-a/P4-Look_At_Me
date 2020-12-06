@@ -10,13 +10,15 @@ import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.appcompat.widget.DrawableUtils
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
+import com.example.lookatme.data.NoteEntity
 import com.example.lookatme.data.SetEntity
 import com.example.lookatme.databinding.ListBackItemBinding
 import kotlinx.coroutines.withContext
 
 
-class SetListAdapter(private val setList: List<SetEntity>)
+class SetListAdapter(private val setList: List<SetEntity>, private val note: MutableLiveData<NoteEntity>)
     : RecyclerView.Adapter<SetListAdapter.ViewHolder>(){
 
     private var checkedRB: CompoundButton? = null
@@ -42,10 +44,12 @@ class SetListAdapter(private val setList: List<SetEntity>)
         val set = setList[position]
         //val back_id
 
-        holder.binding.backColor.setOnCheckedChangeListener(checkedChangeListener)
-
-        if (holder.binding.backColor.isChecked)
+        if(set.res.equals(note.value?.backRes!!)) {
+            holder.binding.backColor.isChecked = true;
             checkedRB = holder.binding.backColor
+        }
+
+        holder.binding.backColor.setOnCheckedChangeListener(checkedChangeListener)
 
         with(holder.binding) {
 
