@@ -1,9 +1,11 @@
 package com.example.lookatme
 
+import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -15,7 +17,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lookatme.data.NoteEntity
 import com.example.lookatme.databinding.MainFragmentBinding
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.reward.RewardItem
+import com.google.android.gms.ads.reward.RewardedVideoAd
+import com.google.android.gms.ads.reward.RewardedVideoAdListener
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdCallback
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
@@ -23,6 +33,7 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: MainFragmentBinding   //need to check
     private lateinit var adapter: NoteListAdapter
+    private lateinit var rewardAd: RewardedAd
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -62,12 +73,14 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
             adapter.selectedNotes.addAll(selectedNotes ?: emptyList())
         })
 
-        binding.floatingActionButton2.setOnClickListener {
-            editNote(NEW_NOTE_ID)
-        }
-
         val adRequest = viewModel.requestAd()
         binding.addViewBanner.loadAd(adRequest)
+
+        createAndLoadRewardAd()
+
+        binding.floatingActionButton2.setOnClickListener {
+            addNote(NEW_NOTE_ID, rewardAd)
+        }
 
         return binding.root
     }
@@ -110,6 +123,51 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
         findNavController().navigate(action)
     }
 
+    fun addNote(noteId: Int, ad: RewardedAd) {
+
+        if(viewModel.checkSize() > 4) {
+
+            if(ad.isLoaded) {
+                var rewardEarned = false;
+                val activityContext: Activity = (activity as AppCompatActivity)
+                val adCallback = object: RewardedAdCallback() {
+                    override fun onUserEarnedReward(p0: com.google.android.gms.ads.rewarded.RewardItem) {
+                        rewardEarned = true;
+                        val action = MainFragmentDirections.actionToEditorFragment((noteId))
+                        findNavController().navigate(action)
+
+
+                    }
+
+                    override fun onRewardedAdClosed() {
+                        super.onRewardedAdClosed()
+
+                        if(!rewardEarned) {
+
+                        var errMessage = "You should watch a video"
+
+                        viewModel.setToast(errMessage)
+
+                        createAndLoadRewardAd() }
+
+                        return
+                    }
+                }
+                ad.show(activityContext, adCallback)
+            }
+
+            else {
+                Log.d("rewardAd", "The ad wasn't loaded yet")
+            }
+
+        }
+
+        else {
+
+        val action = MainFragmentDirections.actionToEditorFragment((noteId))
+        findNavController().navigate(action) }
+    }
+
     override fun playNote(noteId: Int) {
         var action = MainFragmentDirections.actionToDisplayFragment((noteId))
         findNavController().navigate(action)
@@ -124,6 +182,21 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
             outState.putParcelableArrayList(SELECTED_NOTES_KEY, adapter.selectedNotes)
         }
         super.onSaveInstanceState(outState)
+    }
+
+    fun createAndLoadRewardAd() {
+        rewardAd = viewModel.loadRewardAd()
+
+        val adLoadCallback = object: RewardedAdLoadCallback() {
+            override fun onRewardedAdLoaded() {
+                Log.i("adMob_check", "ad_is_loaded")
+            }
+
+            override fun onRewardedAdFailedToLoad(adError: LoadAdError) {
+                Log.i("adMob_check", adError.message)
+            }}
+
+        rewardAd.loadAd(AdRequest.Builder().build(),adLoadCallback)
     }
 
 }

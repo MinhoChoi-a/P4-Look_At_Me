@@ -131,6 +131,13 @@ class EditorFragment: Fragment() {
         var selectedBack = adapter.getCheckedRB()
         var selectedFont = fontAdapter.getCheckedRBfont()
 
+        if(selectedBack == null || selectedFont == null) {
+            var errMessage = "You should select the option"
+            viewModel.setToast(errMessage)
+        }
+
+        else {
+
         viewModel.currentNote.value?.text = binding.editor.text.toString()
         viewModel.currentNote.value?.fontColor = selectedFont?.getTag().toString()
         Log.i("updated_font_color", viewModel.currentNote.value?.fontColor.toString())
@@ -143,12 +150,14 @@ class EditorFragment: Fragment() {
             Log.i("current_note_res", viewModel.currentNote.value?.backRes.toString())
             findNavController().navigateUp()
 
-        }, 100)
+        }, 100) }
 
         return true
     }
 
     private fun deleteAndReturn(): Boolean {
+        val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
 
         val note = viewModel?.currentNote?.value?: NoteEntity()
 

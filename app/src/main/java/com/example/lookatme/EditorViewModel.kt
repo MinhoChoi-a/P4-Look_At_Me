@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.View
 import android.widget.RadioButton
 import android.widget.RadioGroup
+import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
@@ -14,6 +15,8 @@ import com.example.lookatme.data.AppDatabase
 import com.example.lookatme.data.DefaultSetProvider
 import com.example.lookatme.data.NoteEntity
 import com.example.lookatme.data.SetEntity
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.snackbar.Snackbar.LENGTH_LONG
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -71,6 +74,11 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    fun setToast(message: String) {
+        Toast.makeText(getApplication(), message, Toast.LENGTH_LONG).show()
+    }
+
+
     fun findSetAndAddToNote(setId: Int) {
 
         viewModelScope.launch {
@@ -83,9 +91,6 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
                 currentNote.value?.backType = set?.type!!.toInt()
 
                 updateNote()
-
-
-
             }
         }
     }
