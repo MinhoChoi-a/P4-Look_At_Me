@@ -56,8 +56,8 @@ class FontListAdapter(private val fontList: List<FontEntity>, private val note: 
 
             fontColor.setText("Font")
             fontColor.setTag(set.color)
-            //fontColor.setBackgroundResource(id ?: R.drawable.back_transparent)
-            fontColor.setTextColor(id ?: R.color.black)
+            fontColor.setBackgroundResource(id ?: R.drawable.back_transparent)
+            //fontColor.setTextColor(id ?: R.color.black)
         }
     }
 

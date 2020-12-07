@@ -2,6 +2,7 @@ package com.example.lookatme
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.pm.ActivityInfo
 import android.graphics.drawable.AnimationDrawable
 import android.net.Uri
@@ -14,6 +15,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.VideoView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getColor
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -68,7 +70,7 @@ class DisplayFragment: Fragment() {
 
             Log.i("displayed_color_id", font_id.toString())
             Log.i("display_color_cide", R.color.second_c.toString())
-            binding.displayText?.setTextColor(font_id)
+            binding.displayText?.setTextColor(getColor(viewModel.getContext().applicationContext, font_id))
 
             if(it.backType == 1) {
                 val simple_id = resources.getIdentifier(it.backRes,"drawable", activity?.packageName)
@@ -106,6 +108,8 @@ class DisplayFragment: Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val menuId = R.menu.menu_delete

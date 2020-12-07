@@ -1,6 +1,7 @@
 package com.example.lookatme
 
 import android.app.Application
+import android.content.Context
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -30,6 +31,10 @@ class DisplayViewModel(app: Application): AndroidViewModel(app) {
                 currentNote.postValue(note)
             }
         }
+    }
+
+    fun getContext(): Context {
+        return getApplication()
     }
 
 }
