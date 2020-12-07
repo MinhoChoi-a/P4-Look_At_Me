@@ -14,6 +14,9 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lookatme.data.NoteEntity
 import com.example.lookatme.databinding.MainFragmentBinding
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
+import kotlinx.android.synthetic.main.main_fragment.*
 
 class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
 
@@ -62,6 +65,9 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
         binding.floatingActionButton2.setOnClickListener {
             editNote(NEW_NOTE_ID)
         }
+
+        val adRequest = viewModel.requestAd()
+        binding.addViewBanner.loadAd(adRequest)
 
         return binding.root
     }

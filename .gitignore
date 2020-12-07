@@ -9,6 +9,7 @@
 /.idea/assetWizardSettings.xml
 *.mp4
 AndroidManifest.xml
+hidden.xml
 
 .DS_Store
 /build

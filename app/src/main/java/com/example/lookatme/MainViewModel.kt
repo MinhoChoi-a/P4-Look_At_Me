@@ -7,6 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.lookatme.data.AppDatabase
 import com.example.lookatme.data.DefaultSetProvider
 import com.example.lookatme.data.NoteEntity
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.MobileAds
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -48,6 +50,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
         var size:Int =  noteList?.value?.size ?: 0
         Log.i("notelist_size", size.toString())
+    }
+
+    fun requestAd():AdRequest {
+        MobileAds.initialize(getApplication())
+        return AdRequest.Builder().build()
     }
 
 }
