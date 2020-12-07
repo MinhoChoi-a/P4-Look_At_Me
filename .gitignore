@@ -8,6 +8,7 @@
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
 *.mp4
+AndroidManifest.xml
 
 .DS_Store
 /build
