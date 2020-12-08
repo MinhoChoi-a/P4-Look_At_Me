@@ -38,6 +38,7 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
                 listener.playNote(note.id)
             }
 
+
 /**
             clickButtonToDelete.setOnClickListener {
                 if(selectedNotes.contains(note)) {

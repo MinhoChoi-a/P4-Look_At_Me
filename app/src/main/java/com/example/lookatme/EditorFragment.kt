@@ -8,10 +8,10 @@ import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -19,8 +19,9 @@ import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lookatme.data.NoteEntity
-import com.example.lookatme.data.SetEntity
 import com.example.lookatme.databinding.EditorFragmentBinding
+import kotlinx.android.synthetic.main.editor_fragment.view.*
+
 
 class EditorFragment: Fragment() {
 
@@ -76,7 +77,7 @@ class EditorFragment: Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
-                object: OnBackPressedCallback(true) {
+                object : OnBackPressedCallback(true) {
 
                     override fun handleOnBackPressed() {
                         saveAndReturn()
@@ -98,13 +99,14 @@ class EditorFragment: Fragment() {
         })
 
 
-
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
             val savedString = savedInstanceState?.getString(NOTE_TEXT_KEY)
             val curusorPosition = savedInstanceState?.getInt(CURSOR_POSITION_KEY) ?: 0
             binding.editor.setText(savedString ?: it.text)
             binding.editor.setSelection(curusorPosition)
         })
+
+        touchListener(binding.root)
 
         viewModel.getNoteById(args.noteid)
 
@@ -127,7 +129,7 @@ class EditorFragment: Fragment() {
 
     private fun saveAndReturn(): Boolean {
         val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
+        imm.hideSoftInputFromWindow(binding.editor.windowToken, 0)
 
         var selectedBack = adapter.getCheckedRB()
         var selectedFont = fontAdapter.getCheckedRBfont()
@@ -175,6 +177,22 @@ class EditorFragment: Fragment() {
             outState.putInt(CURSOR_POSITION_KEY, selectionStart)
         }
         super.onSaveInstanceState(outState)
+    }
+
+
+
+    private fun touchListener(view: View) {
+        view.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+
+                if(binding.editor.isFocused) {
+                    binding.editor.clearFocus()
+                    val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
+                }
+                return true
+            }
+        })
     }
 
 }

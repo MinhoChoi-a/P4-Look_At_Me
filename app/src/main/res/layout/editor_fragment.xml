@@ -5,7 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".EditorFragment"
-    android:padding="10dp">
+    android:padding="10dp"
+    android:focusableInTouchMode="true"
+    android:clickable="true"
+    android:focusable="true">
 
     <EditText
         android:id="@+id/editor"
@@ -17,7 +20,7 @@
         android:inputType="textCapSentences|textMultiLine"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-
+        android:focusable="auto"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

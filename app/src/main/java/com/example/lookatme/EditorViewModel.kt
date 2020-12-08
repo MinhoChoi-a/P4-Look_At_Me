@@ -1,6 +1,7 @@
 package com.example.lookatme
 
 import android.app.Application
+import android.content.Context
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
@@ -93,5 +94,9 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
                 updateNote()
             }
         }
+    }
+
+    fun getContext(): Context {
+        return getApplication()
     }
 }
