@@ -39,10 +39,6 @@ class DisplayFragment: Fragment() {
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
 
         (activity as AppCompatActivity).supportActionBar?.let {
-            it.setHomeButtonEnabled(true)
-            it.setDisplayShowHomeEnabled(true)
-            it.setDisplayHomeAsUpEnabled(true)
-            it.setHomeAsUpIndicator(R.drawable.ic_check)
             it.hide()
         }
 
@@ -57,11 +53,14 @@ class DisplayFragment: Fragment() {
                 object : OnBackPressedCallback(true) {
 
                     override fun handleOnBackPressed() {
-                        saveAndReturn()
+                        returnToMain()
                     }
                 })
 
+        viewModel.getNoteById(args.noteid)
+
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
+
             binding.displayText.setText(it.text)
 
             Log.i("displayed_color", it.fontColor)
@@ -104,41 +103,12 @@ class DisplayFragment: Fragment() {
             }, 1000)
         })
 
-        viewModel.getNoteById(args.noteid)
-
         return binding.root
     }
 
-
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        val menuId = R.menu.menu_delete
-        inflater.inflate(menuId, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId) {
-            android.R.id.home -> saveAndReturn()
-            //R.id.action_delete -> deleteAndReturn()
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    private fun saveAndReturn(): Boolean {
-        val imm = requireActivity().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
-
+    private fun returnToMain(): Boolean {
         findNavController().navigateUp()
         return true
-    }
-
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        with(binding.displayText) {
-            outState.putString(NOTE_TEXT_KEY, text.toString())
-        }
-        super.onSaveInstanceState(outState)
     }
 
 }

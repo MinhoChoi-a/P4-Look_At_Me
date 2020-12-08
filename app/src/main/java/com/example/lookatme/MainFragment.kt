@@ -41,8 +41,16 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(false)
+
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+
+        (activity as AppCompatActivity).supportActionBar?.let {
+            it.setHomeButtonEnabled(true)
+            it.setDisplayShowHomeEnabled(true)
+            it.setDisplayHomeAsUpEnabled(true)
+            it.setHomeAsUpIndicator(R.drawable.ic_check)
+            it.show()
+        }
 
         setHasOptionsMenu(true)
 
