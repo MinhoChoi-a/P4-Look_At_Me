@@ -1,25 +1,19 @@
 package com.example.lookatme
 
-import android.content.Context
 import android.content.res.Resources
-import android.graphics.drawable.Drawable
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
-import androidx.appcompat.widget.DrawableUtils
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lookatme.data.NoteEntity
-import com.example.lookatme.data.SetEntity
+import com.example.lookatme.data.BackgroundEntity
 import com.example.lookatme.databinding.ListBackItemBinding
-import kotlinx.coroutines.withContext
 
 
-class SetListAdapter(private val setList: List<SetEntity>, private val note: MutableLiveData<NoteEntity>)
-    : RecyclerView.Adapter<SetListAdapter.ViewHolder>(){
+class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, private val note: MutableLiveData<NoteEntity>)
+    : RecyclerView.Adapter<BackgroundListAdapter.ViewHolder>(){
 
     private var checkedRB: CompoundButton? = null
     private var resources: Resources? = null
@@ -41,7 +35,7 @@ class SetListAdapter(private val setList: List<SetEntity>, private val note: Mut
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        val set = setList[position]
+        val set = backgroundList[position]
         //val back_id
 
         if(set.res.equals(note.value?.backRes!!)) {
@@ -70,6 +64,6 @@ class SetListAdapter(private val setList: List<SetEntity>, private val note: Mut
         return this.checkedRB
     }
 
-    override fun getItemCount() = setList.size
+    override fun getItemCount() = backgroundList.size
 
   }

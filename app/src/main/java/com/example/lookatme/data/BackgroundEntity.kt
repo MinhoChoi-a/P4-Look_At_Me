@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 @Entity(tableName = "settings")
-data class SetEntity(
+data class BackgroundEntity(
         @PrimaryKey(autoGenerate = true)
         var id: Int,
         var type: Int, //gradient or video

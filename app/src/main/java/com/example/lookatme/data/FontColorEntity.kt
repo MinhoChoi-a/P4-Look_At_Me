@@ -8,14 +8,15 @@ import com.example.lookatme.NEW_SET_ID
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(tableName = "fonts")
-class FontEntity (
+@Entity(tableName = "fontscolor")
+class FontColorEntity (
         @PrimaryKey(autoGenerate = true)
         var id: Int,
         var color: String, //gradient or video
+        var name: String
 
 ) : Parcelable {
-    constructor(): this(NEW_FONT_ID,"")
-    constructor(color:String): this(NEW_FONT_ID,color)
+    constructor(): this(NEW_FONT_ID,"", "")
+    constructor(color:String, name:String): this(NEW_FONT_ID,color, name)
 
 }

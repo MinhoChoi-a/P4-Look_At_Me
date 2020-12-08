@@ -44,8 +44,10 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 val defaultSets = DefaultSetProvider.getSettings()
                 val countNote = database?.noteDao()?.getCount()
                 val countNum = database?.setDao()?.getCount()
+                val countNumFonts = database?.fontColorDao()?.getCount()
+                val countNumFontStyle = database?.fontStyleDao()?.getCount()
+                val defaultFontStyle = DefaultSetProvider.getFontStyle()
                 val defaultFonts = DefaultSetProvider.getFontColor()
-                val countNumFonts = database?.fontDao()?.getCount()
                 val defaultNotes = DefaultSetProvider.getNotes()
 
                 if(countNote == 0) {
@@ -56,7 +58,11 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                 database?.setDao()?.insertAll(defaultSets) }
 
                 if(countNumFonts == 0) {
-                    database?.fontDao()?.insertAll(defaultFonts)
+                    database?.fontColorDao()?.insertAll(defaultFonts)
+                }
+
+                if(countNumFontStyle == 0) {
+                    database?.fontStyleDao()?.insertAll(defaultFontStyle)
                 }
             }
         }

@@ -8,7 +8,6 @@ import android.os.Looper
 import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -20,7 +19,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.lookatme.data.NoteEntity
 import com.example.lookatme.databinding.EditorFragmentBinding
-import kotlinx.android.synthetic.main.editor_fragment.view.*
 
 
 class EditorFragment: Fragment() {
@@ -31,9 +29,10 @@ class EditorFragment: Fragment() {
 
     private lateinit var binding: EditorFragmentBinding
 
-    private lateinit var adapter:SetListAdapter
+    private lateinit var adapter:BackgroundListAdapter
 
-    private lateinit var fontAdapter:FontListAdapter
+    private lateinit var fontColorAdapter:FontColorListAdapter
+    private lateinit var fontStyleAdapter:FontStyleListAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -61,20 +60,6 @@ class EditorFragment: Fragment() {
         binding = EditorFragmentBinding.inflate(inflater, container, false)
         binding.editor.setText("")
 
-        with(binding.recyclerViewBackStyle) {
-            setHasFixedSize(true)
-            val divider = DividerItemDecoration(context, LinearLayoutManager(context).orientation
-            )
-            addItemDecoration(divider)
-        }
-
-        with(binding.recyclerViewFontStyle) {
-            setHasFixedSize(true)
-            val divider = DividerItemDecoration(context, LinearLayoutManager(context).orientation
-            )
-            addItemDecoration(divider)
-        }
-
         requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
                 object : OnBackPressedCallback(true) {
@@ -85,16 +70,21 @@ class EditorFragment: Fragment() {
                 })
 
         viewModel.setList?.observe(viewLifecycleOwner, Observer {
-            adapter = SetListAdapter(it, viewModel.currentNote)
+            adapter = BackgroundListAdapter(it, viewModel.currentNote)
             binding.recyclerViewBackStyle.adapter = adapter
             binding.recyclerViewBackStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-
-
         })
 
         viewModel.fontList?.observe(viewLifecycleOwner, Observer {
-            fontAdapter = FontListAdapter(it, viewModel.currentNote)
-            binding.recyclerViewFontStyle.adapter = fontAdapter
+            fontColorAdapter = FontColorListAdapter(it, viewModel.currentNote)
+            binding.recyclerViewFontColor.adapter = fontColorAdapter
+            binding.recyclerViewFontColor.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        })
+
+
+        viewModel.fontStyleList?.observe(viewLifecycleOwner, Observer {
+            fontStyleAdapter = FontStyleListAdapter(it, viewModel.currentNote)
+            binding.recyclerViewFontStyle.adapter = fontStyleAdapter
             binding.recyclerViewFontStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
         })
 
@@ -132,9 +122,10 @@ class EditorFragment: Fragment() {
         imm.hideSoftInputFromWindow(binding.editor.windowToken, 0)
 
         var selectedBack = adapter.getCheckedRB()
-        var selectedFont = fontAdapter.getCheckedRBfont()
+        var selectedFont = fontColorAdapter.getCheckedRBfont()
+        var selectedFontStyle = fontStyleAdapter.getCheckedRBfontStyle()
 
-        if(selectedBack == null || selectedFont == null) {
+        if(selectedBack == null || selectedFont == null || selectedFontStyle == null) {
             var errMessage = "You should select the option"
             viewModel.setToast(errMessage)
         }
@@ -145,7 +136,7 @@ class EditorFragment: Fragment() {
         viewModel.currentNote.value?.fontColor = selectedFont?.getTag().toString()
         Log.i("updated_font_color", viewModel.currentNote.value?.fontColor.toString())
 
-        viewModel.currentNote.value?.fontStyle = "Open sans"
+        viewModel.currentNote.value?.fontStyle = selectedFontStyle?.getTag().toString()
         viewModel.findSetAndAddToNote(Integer.parseInt(selectedBack?.getTag().toString()))
 
         Handler(Looper.getMainLooper()).postDelayed({

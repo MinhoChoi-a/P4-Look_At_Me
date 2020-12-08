@@ -4,15 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import androidx.sqlite.db.SupportSQLiteDatabase
 
-@Database(entities=[NoteEntity::class, SetEntity::class, FontEntity::class],version=1, exportSchema = false)
+@Database(entities=[NoteEntity::class, BackgroundEntity::class, FontColorEntity::class, FontStyleEntity::class],version=1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun noteDao(): NoteDAO?
-    abstract fun setDao(): SetDAO?
-    abstract fun fontDao(): FontDAO?
+    abstract fun setDao(): backgroundDAO?
+    abstract fun fontColorDao(): FontColorDAO?
+    abstract fun fontStyleDao(): FontStyleDAO?
 
     companion object {
 
@@ -25,7 +24,7 @@ abstract class AppDatabase: RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
-                        "LookAtMe1204.db"
+                        "LookAtMe1208.db"
                     ).build()
                 }
             }
