@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+android:opacity="opaque">
+
+    <item android:duration="3000"
+        android:drawable="@drawable/intro_grad_start"/>
+
+    <item android:duration="3000"
+        android:drawable="@drawable/intro_grad_center"/>
+
+    <item android:duration="3000"
+        android:drawable="@drawable/intro_grad_end"/>
+
+</animation-list>
+
+
+
+
