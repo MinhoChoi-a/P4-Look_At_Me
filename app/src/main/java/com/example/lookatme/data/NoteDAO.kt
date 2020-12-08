@@ -9,6 +9,9 @@ interface NoteDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertNote(note: NoteEntity)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(notes: List<NoteEntity>)
+
     //LiveData is kind of observer, so the data is updated automatically
     @Query("SELECT * FROM notes ORDER BY id ASC")
     fun getAll(): LiveData<List<NoteEntity>>

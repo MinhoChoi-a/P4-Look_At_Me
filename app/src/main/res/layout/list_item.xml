@@ -8,12 +8,15 @@
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/click_button_to_play"
-        android:layout_width="72dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
 
+        app:borderWidth="0dp"
+
+        android:backgroundTint="@color/theme"
         android:clickable="true"
-        android:focusable="true"
+        android:elevation="8dp"
         app:fabSize="mini"
 
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,12 +27,12 @@
 
     <TextView
         android:id="@+id/noteText"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:paddingLeft="70dp"
         android:ellipsize="end"
         android:maxLines="1"
-
+        android:shadowColor="@color/black"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

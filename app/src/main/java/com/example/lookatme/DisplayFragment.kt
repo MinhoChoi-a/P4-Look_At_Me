@@ -16,6 +16,7 @@ import android.widget.VideoView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -62,6 +63,13 @@ class DisplayFragment: Fragment() {
         viewModel.currentNote.observe(viewLifecycleOwner, Observer {
 
             binding.displayText.setText(it.text)
+            Log.i("fontTagT", it.fontStyle)
+
+            var font_style = resources.getIdentifier(it.fontStyle,"font", activity?.packageName)
+
+            Log.d("fontTag", font_style.toString())
+
+            binding.displayText.typeface = ResourcesCompat.getFont(viewModel.getContext().applicationContext, font_style)
 
             Log.i("displayed_color", it.fontColor)
 

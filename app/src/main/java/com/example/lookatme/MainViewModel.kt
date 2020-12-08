@@ -42,9 +42,15 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val defaultSets = DefaultSetProvider.getSettings()
+                val countNote = database?.noteDao()?.getCount()
                 val countNum = database?.setDao()?.getCount()
                 val defaultFonts = DefaultSetProvider.getFontColor()
                 val countNumFonts = database?.fontDao()?.getCount()
+                val defaultNotes = DefaultSetProvider.getNotes()
+
+                if(countNote == 0) {
+                    database?.noteDao()?.insertAll(defaultNotes)
+                }
 
                 if(countNum == 0) {
                 database?.setDao()?.insertAll(defaultSets) }

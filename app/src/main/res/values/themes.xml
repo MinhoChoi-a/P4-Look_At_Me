@@ -18,10 +18,12 @@
         <item name="android:windowBackground">@drawable/intro</item>
     </style>
 
-    <style name="Theme.LookAtMe.NoActionBar">
-        <item name="windowActionBar">true</item>
-        <item name="windowNoTitle">true</item>
+    <style name="mainTheme" parent="Theme.AppCompat.DayNight">
+        <item name="android:windowBackground">@drawable/intro_grad</item>
+        <item name="actionBarTheme">@color/transparent</item>
+        <item name="android:textColor">@color/white</item>
     </style>
+
 
     <style name="Theme.LookAtMe.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

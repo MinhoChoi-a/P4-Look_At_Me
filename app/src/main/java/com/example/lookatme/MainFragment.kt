@@ -49,7 +49,7 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
             it.setDisplayShowHomeEnabled(true)
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_check)
-            it.show()
+            it.hide()
         }
 
         setHasOptionsMenu(true)

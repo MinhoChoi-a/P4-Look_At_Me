@@ -9,11 +9,10 @@
 
     <RadioButton
         android:id="@+id/fontColor"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="10dp"
-        android:width="100dp"
-        android:height="50dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_margin="10dp"
+        android:textAlignment="center"
         android:checked="false"
         android:ellipsize="none"
         android:focusable="auto"

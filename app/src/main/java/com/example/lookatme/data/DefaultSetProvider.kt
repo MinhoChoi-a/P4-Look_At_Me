@@ -26,5 +26,11 @@ class DefaultSetProvider {
                 FontEntity("fifth_c"),
                 FontEntity("sixth_c")
         )
+
+        fun getNotes() = arrayListOf(
+                NoteEntity("Hello World", "robotoblack", "white", 2, "back_grad1",),
+                NoteEntity("Starry Starry Night", "annietelescope", "second_c", 3, "starry",),
+                NoteEntity("I Love You", "dancingscript", "white", 2, "back_grad3",)
+        )
     }
 }
