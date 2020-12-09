@@ -40,7 +40,19 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
 
         if(set.color.equals(note.value?.fontColor!!)) {
             holder.binding.fontColor.isChecked = true;
+            holder.binding.backColorback.setBackgroundResource(R.drawable.select)
             checkedRBfont = holder.binding.fontColor
+        }
+
+        val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+            checkedRBfont?.apply { setChecked(!isChecked) }
+            checkedRBfont = compoundButton.apply { setChecked(isChecked) }
+            if(isChecked) {
+                holder.binding.backColorback.setBackgroundResource(R.drawable.select)
+            }
+            else {
+                holder.binding.backColorback.setBackgroundResource(R.drawable.non_select)
+            }
         }
 
         holder.binding.fontColor.setOnCheckedChangeListener(checkedChangeListener)
@@ -54,11 +66,6 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
             fontColor.setBackgroundResource(id ?: R.drawable.back_transparent)
             //fontColor.setTextColor(id ?: R.color.black)
         }
-    }
-
-    private val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
-        checkedRBfont?.apply { setChecked(!isChecked) }
-        checkedRBfont = compoundButton.apply { setChecked(isChecked) }
     }
 
     fun getCheckedRBfont(): CompoundButton? {

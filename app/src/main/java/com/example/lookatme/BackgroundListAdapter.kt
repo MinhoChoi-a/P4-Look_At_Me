@@ -40,7 +40,19 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
 
         if(set.res.equals(note.value?.backRes!!)) {
             holder.binding.backColor.isChecked = true;
+            holder.binding.backColorback.setBackgroundResource(R.drawable.select)
             checkedRB = holder.binding.backColor
+        }
+
+        val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+            checkedRB?.apply { setChecked(!isChecked) }
+            checkedRB = compoundButton.apply { setChecked(isChecked) }
+            if(isChecked) {
+                holder.binding.backColorback.setBackgroundResource(R.drawable.select)
+            }
+            else {
+                holder.binding.backColorback.setBackgroundResource(R.drawable.non_select)
+            }
         }
 
         holder.binding.backColor.setOnCheckedChangeListener(checkedChangeListener)
@@ -51,18 +63,18 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
 
             backColor.setText(set.title)
             backColor.setTag(set.id)
+            //backColor.setButtonDrawable(id ?: R.drawable.back_transparent)
             backColor.setBackgroundResource(id ?: R.drawable.back_transparent)
         }
     }
 
-    private val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
-        checkedRB?.apply { setChecked(!isChecked) }
-        checkedRB = compoundButton.apply { setChecked(isChecked) }
-    }
+
 
     fun getCheckedRB(): CompoundButton? {
         return this.checkedRB
     }
+
+
 
     override fun getItemCount() = backgroundList.size
 

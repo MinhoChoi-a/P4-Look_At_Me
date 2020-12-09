@@ -48,6 +48,18 @@ class FontStyleListAdapter(private val fontStyleList: List<FontStyleEntity>, pri
         if(set.style.equals(note.value?.fontStyle)) {
             holder.binding.fontStyle.isChecked = true;
             checkedRBfontStyle = holder.binding.fontStyle
+            holder.binding.backColorback.setBackgroundResource(R.drawable.select)
+        }
+
+        val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+            checkedRBfontStyle?.apply { setChecked(!isChecked) }
+            checkedRBfontStyle = compoundButton.apply { setChecked(isChecked) }
+            if(isChecked) {
+                holder.binding.backColorback.setBackgroundResource(R.drawable.select)
+            }
+            else {
+                holder.binding.backColorback.setBackgroundResource(R.drawable.non_select)
+            }
         }
 
         holder.binding.fontStyle.setOnCheckedChangeListener(checkedChangeListener)
@@ -62,11 +74,6 @@ class FontStyleListAdapter(private val fontStyleList: List<FontStyleEntity>, pri
             fontStyle.setBackgroundResource(id ?: R.drawable.back_transparent)
 
         }
-    }
-
-    private val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
-        checkedRBfontStyle?.apply { setChecked(!isChecked) }
-        checkedRBfontStyle = compoundButton.apply { setChecked(isChecked) }
     }
 
     fun getCheckedRBfontStyle(): CompoundButton? {

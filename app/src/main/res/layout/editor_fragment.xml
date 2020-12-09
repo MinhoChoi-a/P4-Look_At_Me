@@ -38,6 +38,7 @@
         android:paddingLeft="10dp"/>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/radio_back_group"
@@ -67,6 +68,7 @@
         android:paddingLeft="10dp"/>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/radio_font_group"
@@ -96,6 +98,7 @@
         android:paddingLeft="10dp"/>
 
     <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/radio_font_style_group"
