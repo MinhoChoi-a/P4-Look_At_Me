@@ -34,14 +34,13 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
     private lateinit var binding: MainFragmentBinding   //need to check
     private lateinit var adapter: NoteListAdapter
     private lateinit var rewardAd: RewardedAd
+    private var rewardEarned: Boolean = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
-
         activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
 
         (activity as AppCompatActivity).supportActionBar?.let {
@@ -136,15 +135,12 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
         if(viewModel.checkSize() > 4) {
 
             if(ad.isLoaded) {
-                var rewardEarned = false;
+                rewardEarned = false;
                 val activityContext: Activity = (activity as AppCompatActivity)
                 val adCallback = object: RewardedAdCallback() {
+
                     override fun onUserEarnedReward(p0: com.google.android.gms.ads.rewarded.RewardItem) {
                         rewardEarned = true;
-                        val action = MainFragmentDirections.actionToEditorFragment((noteId))
-                        findNavController().navigate(action)
-
-
                     }
 
                     override fun onRewardedAdClosed() {
@@ -153,11 +149,9 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
                         if(!rewardEarned) {
 
                         var errMessage = "You should watch a video"
-
                         viewModel.setToast(errMessage)
-
-                        createAndLoadRewardAd() }
-
+                        createAndLoadRewardAd()
+                        }
                         return
                     }
                 }
@@ -205,6 +199,20 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
             }}
 
         rewardAd.loadAd(AdRequest.Builder().build(),adLoadCallback)
+    }
+
+    override fun onResume() {
+
+        super.onResume()
+        if(rewardEarned) {
+            Log.i("moveToNext", "What is the problem?")
+            rewardEarned = false
+            val action = MainFragmentDirections.actionToEditorFragment((NEW_NOTE_ID))
+            findNavController().navigate(action)
+        }
+
+
+
     }
 
 }

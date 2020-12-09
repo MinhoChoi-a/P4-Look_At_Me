@@ -6,12 +6,12 @@ class DefaultSetProvider {
     companion object {
 
         fun getSettings() = arrayListOf(
-                BackgroundEntity(1, "Moon White","back_moonwhite"),
-                BackgroundEntity(1, "Simple Black", "back_simpleblack"),
-                BackgroundEntity(2, "Gradient 1", "back_grad1"),
-                BackgroundEntity(2, "Gradient 2", "back_grad2"),
-                BackgroundEntity(2, "Gradient 3", "back_grad3"),
-                BackgroundEntity(3, "Starry Night", "starry")
+                BackgroundEntity(1, "Moon White","back_moonwhite", "back_moonwhite"),
+                BackgroundEntity(1, "Simple Black", "back_simpleblack", "back_simpleblack"),
+                BackgroundEntity(2, "Gradient 1", "back_grad1", "back_grad1_start"),
+                BackgroundEntity(2, "Gradient 2", "back_grad2", "back_grad2_start"),
+                BackgroundEntity(2, "Gradient 3", "back_grad3", "back_grad3_start"),
+                BackgroundEntity(3, "Starry Night", "starry", "starry"),
         )
 
         fun getFontColor() = arrayListOf(

@@ -59,7 +59,7 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
 
         with(holder.binding) {
 
-            var id = resources?.getIdentifier(set.res, "drawable", packageName)
+            var id = resources?.getIdentifier(set.backImage, "drawable", packageName)
 
             backColor.setText(set.title)
             backColor.setTag(set.id)

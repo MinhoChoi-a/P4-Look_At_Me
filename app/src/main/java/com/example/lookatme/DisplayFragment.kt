@@ -11,6 +11,9 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.*
+import android.view.animation.AlphaAnimation
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.view.inputmethod.InputMethodManager
 import android.widget.VideoView
 import androidx.activity.OnBackPressedCallback
@@ -70,6 +73,9 @@ class DisplayFragment: Fragment() {
             Log.d("fontTag", font_style.toString())
 
             binding.displayText.typeface = ResourcesCompat.getFont(viewModel.getContext().applicationContext, font_style)
+
+            binding.displayText.setAnimation(AnimationUtils.loadAnimation(context, R.anim.blink))
+            binding.displayText.clearAnimation()
 
             Log.i("displayed_color", it.fontColor)
 

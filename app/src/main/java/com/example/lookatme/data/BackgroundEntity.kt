@@ -13,10 +13,11 @@ data class BackgroundEntity(
         var id: Int,
         var type: Int, //gradient or video
         var title: String?,
-        var res: String?
+        var res: String?,
+        var backImage: String?
 
 ) : Parcelable {
-    constructor(): this(NEW_SET_ID,0,"","")
-    constructor(type:Int, title:String, res: String): this(NEW_SET_ID,type,title,res)
+    constructor(): this(NEW_SET_ID,0,"","","")
+    constructor(type:Int, title:String, res: String, image:String): this(NEW_SET_ID,type,title,res,image)
 
 }
