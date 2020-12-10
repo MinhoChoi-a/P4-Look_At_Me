@@ -30,6 +30,7 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
         with(holder.binding) {
             noteText.text = note.text
 
+
             noteText.setOnClickListener {
                 listener.editNote(note.id)
             }

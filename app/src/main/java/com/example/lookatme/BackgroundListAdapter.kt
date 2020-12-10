@@ -1,10 +1,12 @@
 package com.example.lookatme
 
+import android.content.Context
 import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
+import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lookatme.data.NoteEntity
@@ -18,6 +20,7 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
     private var checkedRB: CompoundButton? = null
     private var resources: Resources? = null
     private var packageName: String = ""
+    private lateinit var context: Context
 
     inner class ViewHolder(itemView: View):
             RecyclerView.ViewHolder(itemView) {
@@ -29,6 +32,7 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
         val view = inflater.inflate(R.layout.list_back_item, parent, false)
         resources = parent.context.resources
         packageName = parent.context.packageName
+        context = parent.context
 
         return ViewHolder(view)
     }
@@ -65,6 +69,10 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
             backColor.setTag(set.id)
             //backColor.setButtonDrawable(id ?: R.drawable.back_transparent)
             backColor.setBackgroundResource(id ?: R.drawable.back_transparent)
+
+            if(set.type==3) {
+                backColor.setTextColor(getColor(context,R.color.white))
+            }
         }
     }
 

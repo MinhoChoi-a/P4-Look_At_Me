@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/editor"
-        android:text="Select Background"
+        android:text="Background"
         android:textSize="20dp"
         android:paddingLeft="10dp"/>
 
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/radio_back_group"
-        android:text="Select Font Color"
+        android:text="Font Color"
         android:textSize="20dp"
         android:paddingLeft="10dp"/>
 
@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/radio_font_group"
-        android:text="Select Font Style"
+        android:text="Font Style"
         android:textSize="20dp"
         android:paddingLeft="10dp"/>
 

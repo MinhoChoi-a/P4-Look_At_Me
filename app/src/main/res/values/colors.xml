@@ -14,6 +14,8 @@
     <color name="font_back">#83000000</color>
     <color name="fontColor">#000000</color>
 
+    <color name="accent">#FFf5df4d</color>
+
     <color name="first_c">#FF1B1E23</color>
     <color name="second_c">#FFEFFD5F</color>
     <color name="third_c">#FFFDE64B</color>
