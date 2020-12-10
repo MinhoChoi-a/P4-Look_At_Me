@@ -14,7 +14,9 @@ import android.view.*
 import android.view.animation.AlphaAnimation
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.TranslateAnimation
 import android.view.inputmethod.InputMethodManager
+import android.widget.CompoundButton
 import android.widget.VideoView
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +39,8 @@ class DisplayFragment: Fragment() {
     private lateinit var binding: DisplayFragmentBinding
 
     var touched:Boolean = false
+
+    private var checkedSwitch: CompoundButton? = null
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -76,9 +80,6 @@ class DisplayFragment: Fragment() {
             Log.d("fontTag", font_style.toString())
 
             binding.displayText.typeface = ResourcesCompat.getFont(viewModel.getContext().applicationContext, font_style)
-
-            binding.displayText.setAnimation(AnimationUtils.loadAnimation(context, R.anim.blink))
-            binding.displayText.clearAnimation()
 
             Log.i("displayed_color", it.fontColor)
 
@@ -120,6 +121,28 @@ class DisplayFragment: Fragment() {
             }, 1000)
         })
 
+        binding.closeBtn?.setOnClickListener {
+            backToMain()
+        }
+
+        val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
+
+            if(isChecked) {
+                Log.i("switchChecked","switchChecked")
+
+                AnimationUtils.loadAnimation(context, R.anim.blink).also {animation ->
+                    binding.displayText.startAnimation(animation)
+                }
+                //
+            }
+            else {
+                Log.i("switchUnChecked","switchUnChecked")
+                binding.displayText.clearAnimation()
+            }
+        }
+
+        binding.blinkSwitch?.setOnCheckedChangeListener(checkedChangeListener)
+
         touchListener(binding.displayText)
 
         return binding.root
@@ -156,6 +179,10 @@ class DisplayFragment: Fragment() {
                 return true
             }
         })
+    }
+
+    private fun backToMain() {
+        findNavController().navigateUp()
     }
 
 }

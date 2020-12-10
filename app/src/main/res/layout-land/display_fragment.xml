@@ -44,7 +44,7 @@
         android:marqueeRepeatLimit="marquee_forever"
         android:singleLine="true"
         android:textAlignment="center"
-        android:textSize="112sp"
+        android:textSize="200dp"
         android:clickable="true"
         android:focusable="true"
         tools:text="Hello Hello" />

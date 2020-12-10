@@ -43,7 +43,7 @@ class EditorFragment: Fragment() {
             it.setHomeAsUpIndicator(R.drawable.ic_check)
             it.show()
         }
-        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+        activity?.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setHasOptionsMenu(true)
 
