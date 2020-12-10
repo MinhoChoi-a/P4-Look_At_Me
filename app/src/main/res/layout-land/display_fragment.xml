@@ -45,6 +45,36 @@
         android:singleLine="true"
         android:textAlignment="center"
         android:textSize="112sp"
+        android:clickable="true"
+        android:focusable="true"
         tools:text="Hello Hello" />
+
+    <Switch
+        android:id="@+id/blink_switch"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="15dp"
+        android:layout_toLeftOf="@id/close_btn"
+        android:text="TEXT BLINK"
+        android:visibility="invisible"
+
+        />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/close_btn"
+        android:elevation="0dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:fabCustomSize="35dp"
+        app:maxImageSize="30dp"
+        android:scaleType="center"
+        android:padding="0dp"
+        android:layout_alignParentEnd="true"
+        app:srcCompat="@drawable/ic_close"
+        android:visibility="invisible"/>
 
 </RelativeLayout>

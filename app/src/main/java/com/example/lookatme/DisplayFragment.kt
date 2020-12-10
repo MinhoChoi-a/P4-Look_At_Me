@@ -20,6 +20,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.core.content.res.ResourcesCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +35,8 @@ class DisplayFragment: Fragment() {
     private val args:DisplayFragmentArgs by navArgs()
 
     private lateinit var binding: DisplayFragmentBinding
+
+    var touched:Boolean = false
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -117,12 +120,42 @@ class DisplayFragment: Fragment() {
             }, 1000)
         })
 
+        touchListener(binding.displayText)
+
         return binding.root
     }
 
     private fun returnToMain(): Boolean {
         findNavController().navigateUp()
         return true
+    }
+
+    private fun touchListener(view: View) {
+        view.setOnTouchListener(object : View.OnTouchListener {
+            override fun onTouch(v: View?, event: MotionEvent): Boolean {
+
+                if(event.action == MotionEvent.ACTION_DOWN) {
+
+                if(!touched) {
+                    binding.closeBtn?.setVisibility(View.VISIBLE)
+                    binding.blinkSwitch?.setVisibility(View.VISIBLE)
+
+                    Log.i("turnon","turnon")
+                    touched=true
+                }
+
+                else{
+                    binding.closeBtn?.setVisibility(View.INVISIBLE)
+                    binding.blinkSwitch?.setVisibility(View.INVISIBLE)
+
+                    Log.i("turnoff","turnoff")
+                    touched=false
+
+                }
+            }
+                return true
+            }
+        })
     }
 
 }
