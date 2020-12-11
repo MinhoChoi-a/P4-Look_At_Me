@@ -81,7 +81,8 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     fun loadRewardAd(): RewardedAd {
 
-        val rewardAd:RewardedAd = RewardedAd(getApplication(), "ca-app-pub-3940256099942544/5224354917")
+        val rewardAd:RewardedAd = RewardedAd(getApplication(), R.string.adMobReward.toString())
+
 
         return rewardAd
     }

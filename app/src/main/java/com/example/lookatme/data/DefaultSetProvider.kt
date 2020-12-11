@@ -6,10 +6,10 @@ class DefaultSetProvider {
     companion object {
 
         fun getSettings() = arrayListOf(
-                BackgroundEntity(1, "Moon White","back_moonwhite", "back_moonwhite"),
+                BackgroundEntity(1, "White","back_moonwhite", "back_moonwhite"),
                 BackgroundEntity(1, "Simple Black", "back_simpleblack", "back_simpleblack"),
                 BackgroundEntity(2, "Sky Blue", "back_grad1", "back_grad1_start"),
-                BackgroundEntity(2, "Illuminating", "back_grad2", "back_grad2_start"),
+                BackgroundEntity(2, "Illumina", "back_grad2", "back_grad2_start"),
                 BackgroundEntity(2, "Warm Heart", "back_grad3", "back_grad3_start"),
                 BackgroundEntity(3, "Snow Flakes", "snowflakes", "snowflakes"),
                 BackgroundEntity(3, "Fire Work", "fireworks", "firework"),
@@ -23,8 +23,8 @@ class DefaultSetProvider {
                 FontColorEntity("second_c", "Yellow"),
                 FontColorEntity("third_c", "Bold Yellow"),
                 FontColorEntity("fourth_c", "Light Orange"),
-                FontColorEntity("fifth_c","Watermelon Red"),
-                FontColorEntity("sixth_c", "Burgundy"),
+                FontColorEntity("fifth_c","Free Red"),
+                FontColorEntity("sixth_c", "Wine Red"),
                 FontColorEntity("teal_700", "Teal Blue"),
                 FontColorEntity("purple_700", "Ultra Marine"),
                 FontColorEntity("purple_200", "Wisteria")

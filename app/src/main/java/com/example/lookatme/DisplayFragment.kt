@@ -122,7 +122,7 @@ class DisplayFragment: Fragment() {
         })
 
         binding.closeBtn?.setOnClickListener {
-            backToMain()
+            returnToMain()
         }
 
         val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
@@ -180,9 +180,4 @@ class DisplayFragment: Fragment() {
             }
         })
     }
-
-    private fun backToMain() {
-        findNavController().navigateUp()
-    }
-
 }

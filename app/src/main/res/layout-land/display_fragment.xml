@@ -79,6 +79,7 @@
         android:scaleType="center"
         android:padding="0dp"
         android:layout_alignParentEnd="true"
+        android:clickable="true"
         app:srcCompat="@drawable/ic_close"
         android:visibility="invisible"
         app:borderWidth="0dp"

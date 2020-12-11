@@ -23,8 +23,8 @@
         <item name="actionBarTheme">@color/transparent</item>
         <item name="colorPrimary">@color/trans</item>
         <item name="colorPrimaryDark">@color/theme</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="fontFamily">@font/robotoblack</item>
+        <item name="android:textColor">@color/snowwhite</item>
+        <item name="fontFamily">@font/montserrat</item>
     </style>
 
 
