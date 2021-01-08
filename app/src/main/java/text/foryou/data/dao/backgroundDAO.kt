@@ -1,7 +1,8 @@
-package text.foryou.data
+package text.foryou.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import text.foryou.data.model.BackgroundEntity
 
 @Dao
 interface backgroundDAO {
@@ -18,6 +19,9 @@ interface backgroundDAO {
 
     @Query("SELECT * FROM settings WHERE id = :id")
     fun getSetById(id: Int): BackgroundEntity? //it is nullable
+
+    @Query("SELECT * FROM settings WHERE res = :res")
+    fun getSetByRes(res: String): BackgroundEntity? //it is nullable
 
     @Query("SELECT COUNT(*) FROM settings")
     fun getCount(): Int?

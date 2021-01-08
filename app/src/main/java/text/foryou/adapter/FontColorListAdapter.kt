@@ -1,16 +1,16 @@
-package text.foryou
+package text.foryou.adapter
 
 import android.content.Context
 import android.content.res.Resources
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CompoundButton
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import text.foryou.data.FontColorEntity
-import text.foryou.data.NoteEntity
+import text.foryou.R
+import text.foryou.data.model.FontColorEntity
+import text.foryou.data.model.NoteEntity
 import text.foryou.databinding.ListFontcolorItemBinding
 
 class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, private val note: MutableLiveData<NoteEntity>)

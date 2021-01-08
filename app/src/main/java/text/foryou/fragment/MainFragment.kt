@@ -1,10 +1,9 @@
-package text.foryou
+package text.foryou.fragment
 
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.pm.ActivityInfo
-import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -18,12 +17,15 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.*
-import text.foryou.data.NoteEntity
-import com.google.android.gms.ads.MobileAds.getRewardedVideoAdInstance
 import com.google.android.gms.ads.rewarded.RewardedAd
 import com.google.android.gms.ads.rewarded.RewardedAdCallback
 import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
+import text.foryou.NEW_NOTE_ID
+import text.foryou.R
+import text.foryou.SELECTED_NOTES_KEY
+import text.foryou.adapter.NoteListAdapter
 import text.foryou.databinding.MainFragmentBinding
+import text.foryou.viewmodel.MainViewModel
 
 
 class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
@@ -95,7 +97,8 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         val menuId =
                 if(this::adapter.isInitialized && adapter.selectedNotes.isNotEmpty()) {
-                R.menu.menu_delete }
+                    R.menu.menu_delete
+                }
                 else {
                     R.menu.menu_main
                 }
@@ -242,8 +245,8 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
         val nButton = alert.getButton(DialogInterface.BUTTON_NEGATIVE)
         val pButton = alert.getButton(DialogInterface.BUTTON_POSITIVE)
 
-        nButton.setTextColor(getColor(viewModel.getContext(),R.color.trans))
-        pButton.setTextColor(getColor(viewModel.getContext(),R.color.trans))
+        nButton.setTextColor(getColor(viewModel.getContext(), R.color.trans))
+        pButton.setTextColor(getColor(viewModel.getContext(), R.color.trans))
 
     }
 

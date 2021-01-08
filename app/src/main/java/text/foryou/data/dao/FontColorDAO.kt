@@ -1,7 +1,8 @@
-package text.foryou.data
+package text.foryou.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import text.foryou.data.model.FontColorEntity
 
 @Dao
 interface FontColorDAO {
@@ -23,4 +24,7 @@ interface FontColorDAO {
 
     @Query("SELECT * FROM fontscolor where color = :color")
     fun getfontByColor(color: String): FontColorEntity?
+
+    @Query("SELECT id FROM fontscolor where color = :color")
+    fun getfontIdByColor(color: String): Int
 }

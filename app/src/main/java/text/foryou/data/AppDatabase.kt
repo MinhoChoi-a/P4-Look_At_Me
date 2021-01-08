@@ -6,6 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import text.foryou.data.dao.FontColorDAO
+import text.foryou.data.dao.FontStyleDAO
+import text.foryou.data.dao.NoteDAO
+import text.foryou.data.dao.backgroundDAO
+import text.foryou.data.model.BackgroundEntity
+import text.foryou.data.model.FontColorEntity
+import text.foryou.data.model.FontStyleEntity
+import text.foryou.data.model.NoteEntity
 
 @Database(entities=[NoteEntity::class, BackgroundEntity::class, FontColorEntity::class, FontStyleEntity::class],version=1, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {

@@ -1,4 +1,4 @@
-package text.foryou
+package text.foryou.adapter
 
 import android.content.Context
 import android.content.res.Resources
@@ -9,8 +9,9 @@ import android.widget.CompoundButton
 import androidx.core.content.ContextCompat.getColor
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import text.foryou.data.NoteEntity
-import text.foryou.data.BackgroundEntity
+import text.foryou.R
+import text.foryou.data.model.NoteEntity
+import text.foryou.data.model.BackgroundEntity
 import text.foryou.databinding.ListBackItemBinding
 
 class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, private val note: MutableLiveData<NoteEntity>)
@@ -70,7 +71,7 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
             backColor.setBackgroundResource(id ?: R.drawable.back_transparent)
 
             if(set.type==3) {
-                backColor.setTextColor(getColor(context,R.color.white))
+                backColor.setTextColor(getColor(context, R.color.white))
             }
         }
     }

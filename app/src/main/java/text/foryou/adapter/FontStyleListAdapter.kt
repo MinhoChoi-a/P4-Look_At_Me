@@ -1,4 +1,4 @@
-package text.foryou
+package text.foryou.adapter
 
 import android.content.Context
 import android.content.res.Resources
@@ -9,8 +9,9 @@ import android.widget.CompoundButton
 import androidx.core.content.res.ResourcesCompat
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.RecyclerView
-import text.foryou.data.FontStyleEntity
-import text.foryou.data.NoteEntity
+import text.foryou.R
+import text.foryou.data.model.FontStyleEntity
+import text.foryou.data.model.NoteEntity
 import text.foryou.databinding.ListFontstyleItemBinding
 
 class FontStyleListAdapter(private val fontStyleList: List<FontStyleEntity>, private val note: MutableLiveData<NoteEntity>)

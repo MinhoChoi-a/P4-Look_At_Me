@@ -1,21 +1,22 @@
-package text.foryou
+package text.foryou.viewmodel
 
 import android.app.Application
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.MobileAds
 import text.foryou.data.AppDatabase
-import text.foryou.data.NoteEntity
-import text.foryou.data.BackgroundEntity
+import text.foryou.data.model.NoteEntity
+import text.foryou.data.model.BackgroundEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import text.foryou.data.FontColorEntity
+import text.foryou.NEW_NOTE_ID
+import text.foryou.data.model.FontColorEntity
+import text.foryou.data.model.FontStyleEntity
 
 class EditorViewModel(app: Application): AndroidViewModel(app) {
 
@@ -25,7 +26,10 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
     var fontList = database?.fontColorDao()?.getAll()
     var fontStyleList = database?.fontStyleDao()?.getAll()
 
-    val fontColor = MutableLiveData<FontColorEntity>()
+    val selectedFontColor = MutableLiveData<FontColorEntity>()
+    val selectedBackground = MutableLiveData<BackgroundEntity>()
+    val selectedFontStyle = MutableLiveData<FontStyleEntity>()
+
 
     fun getNoteById(noteId: Int) {
 
@@ -110,7 +114,7 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
             withContext(Dispatchers.IO) {
 
                 val fc = database?.fontColorDao()?.getfontByColor(color)
-                fontColor.postValue(fc)
+                selectedFontColor.postValue(fc)
 
                 Log.i("firstcheck", "check")
                 }
@@ -122,8 +126,39 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
 
         Log.i("lastcheck", "check")
 
-        if(fontColor.value?.id != null) {
-            return fontColor.value?.id!!
+        if(selectedFontColor.value?.id != null) {
+            return selectedFontColor.value?.id!!
+        }
+
+        return 0
+
+    }
+
+    fun getSelectedBackPosition() {
+
+        val res = currentNote.value?.backRes
+
+        if(res != null) {
+
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+
+                    val rs = database?.setDao()?.getSetByRes(res)
+
+                    selectedBackground.postValue(rs)
+
+                    Log.i("firstcheck", "check")
+                }
+            }
+        }
+    }
+
+    fun returnBackPosition(): Int {
+
+        Log.i("lastcheck", "check")
+
+        if(selectedBackground.value?.id != null) {
+            return selectedBackground.value?.id!!
         }
 
         return 0

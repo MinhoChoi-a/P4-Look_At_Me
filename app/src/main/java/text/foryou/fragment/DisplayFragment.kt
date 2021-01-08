@@ -1,4 +1,4 @@
-package text.foryou
+package text.foryou.fragment
 
 import android.annotation.SuppressLint
 import android.content.pm.ActivityInfo
@@ -20,7 +20,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import text.foryou.R
 import text.foryou.databinding.DisplayFragmentBinding
+import text.foryou.viewmodel.DisplayViewModel
 
 class DisplayFragment: Fragment() {
     private lateinit var viewModel: DisplayViewModel
@@ -112,7 +114,7 @@ class DisplayFragment: Fragment() {
         val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
 
             if(isChecked) {
-                AnimationUtils.loadAnimation(context, R.anim.blink).also {animation ->
+                AnimationUtils.loadAnimation(context, R.anim.blink).also { animation ->
                     binding.displayText.startAnimation(animation)
                 }
                 //

@@ -1,10 +1,11 @@
-package text.foryou
+package text.foryou.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import text.foryou.data.NoteEntity
+import text.foryou.R
+import text.foryou.data.model.NoteEntity
 import text.foryou.databinding.ListItemBinding
 
 

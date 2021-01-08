@@ -1,4 +1,4 @@
-package text.foryou.data
+package text.foryou.data.model
 
 import android.os.Parcelable
 import androidx.room.Entity

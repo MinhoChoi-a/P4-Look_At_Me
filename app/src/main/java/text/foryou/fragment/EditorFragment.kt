@@ -1,11 +1,10 @@
-package text.foryou
+package text.foryou.fragment
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
@@ -16,9 +15,13 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import text.foryou.data.NoteEntity
+import text.foryou.*
+import text.foryou.adapter.BackgroundListAdapter
+import text.foryou.adapter.FontColorListAdapter
+import text.foryou.adapter.FontStyleListAdapter
+import text.foryou.data.model.NoteEntity
 import text.foryou.databinding.EditorFragmentBinding
-import text.foryou.EditorFragmentArgs
+import text.foryou.viewmodel.EditorViewModel
 
 
 class EditorFragment: Fragment() {
@@ -79,8 +82,12 @@ class EditorFragment: Fragment() {
             binding.recyclerViewBackStyle.adapter = adapter
             binding.recyclerViewBackStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
+            viewModel.getSelectedBackPosition()
         })
 
+        viewModel.selectedBackground?.observe(viewLifecycleOwner, Observer {
+            binding.recyclerViewBackStyle.layoutManager?.scrollToPosition(viewModel.returnBackPosition())
+        })
 
         viewModel.fontList?.observe(viewLifecycleOwner, Observer {
             fontColorAdapter = FontColorListAdapter(it, viewModel.currentNote)
@@ -89,11 +96,9 @@ class EditorFragment: Fragment() {
             binding.recyclerViewFontColor.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
 
             viewModel.getSelectedFontColorPosition()
-
-
         })
 
-        viewModel.fontColor?.observe(viewLifecycleOwner, Observer {
+        viewModel.selectedFontColor?.observe(viewLifecycleOwner, Observer {
             binding.recyclerViewFontColor.layoutManager?.scrollToPosition(viewModel.returnFontColorPosition())
         })
 

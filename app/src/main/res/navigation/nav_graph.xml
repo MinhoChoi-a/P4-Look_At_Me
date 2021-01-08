@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="text.foryou.MainFragment"
+        android:name="text.foryou.fragment.MainFragment"
         android:label="Main Fragment"
         tools:layout="@layout/main_fragment">
         <action
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/editorFragment"
-        android:name="text.foryou.EditorFragment"
+        android:name="text.foryou.fragment.EditorFragment"
         android:label="Editor Fragment"
         tools:layout="@layout/editor_fragment">
 
@@ -32,7 +32,7 @@
     </fragment>
     <fragment
         android:id="@+id/displayFragment"
-        android:name="text.foryou.DisplayFragment"
+        android:name="text.foryou.fragment.DisplayFragment"
         android:label="Display Fragment"
         tools:layout="@layout/display_fragment">
 

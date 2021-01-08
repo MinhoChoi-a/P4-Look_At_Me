@@ -1,4 +1,4 @@
-package text.foryou
+package text.foryou.viewmodel
 
 import android.app.Application
 import android.content.Context
@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import text.foryou.data.AppDatabase
 import text.foryou.data.DefaultSetProvider
-import text.foryou.data.NoteEntity
+import text.foryou.data.model.NoteEntity
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds

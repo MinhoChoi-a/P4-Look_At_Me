@@ -1,7 +1,8 @@
-package text.foryou.data
+package text.foryou.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import text.foryou.data.model.NoteEntity
 
 @Dao
 interface NoteDAO {
