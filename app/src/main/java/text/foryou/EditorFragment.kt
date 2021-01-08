@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.*
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.OnBackPressedCallback
@@ -29,7 +30,6 @@ class EditorFragment: Fragment() {
     private lateinit var binding: EditorFragmentBinding
 
     private lateinit var adapter: BackgroundListAdapter
-
     private lateinit var fontColorAdapter: FontColorListAdapter
     private lateinit var fontStyleAdapter: FontStyleListAdapter
 
@@ -55,8 +55,11 @@ class EditorFragment: Fragment() {
                 }
 
         viewModel = ViewModelProvider(this).get(EditorViewModel::class.java)
+        viewModel.getNoteById(args.noteid)
+
 
         binding = EditorFragmentBinding.inflate(inflater, container, false)
+
         binding.editor.setText("")
 
         val adRequest = viewModel.requestAd()
@@ -75,14 +78,24 @@ class EditorFragment: Fragment() {
             adapter = BackgroundListAdapter(it, viewModel.currentNote)
             binding.recyclerViewBackStyle.adapter = adapter
             binding.recyclerViewBackStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
         })
+
 
         viewModel.fontList?.observe(viewLifecycleOwner, Observer {
             fontColorAdapter = FontColorListAdapter(it, viewModel.currentNote)
+
             binding.recyclerViewFontColor.adapter = fontColorAdapter
             binding.recyclerViewFontColor.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            viewModel.getSelectedFontColorPosition()
+
+
         })
 
+        viewModel.fontColor?.observe(viewLifecycleOwner, Observer {
+            binding.recyclerViewFontColor.layoutManager?.scrollToPosition(viewModel.returnFontColorPosition())
+        })
 
         viewModel.fontStyleList?.observe(viewLifecycleOwner, Observer {
             fontStyleAdapter = FontStyleListAdapter(it, viewModel.currentNote)
@@ -98,9 +111,8 @@ class EditorFragment: Fragment() {
             binding.editor.setSelection(curusorPosition)
         })
 
-        touchListener(binding.root)
 
-        viewModel.getNoteById(args.noteid)
+        touchListener(binding.root)
 
         return binding.root
     }

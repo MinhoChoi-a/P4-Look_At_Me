@@ -1,9 +1,10 @@
 package text.foryou
 
 import android.app.Application
-import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.ads.AdRequest
@@ -14,6 +15,7 @@ import text.foryou.data.BackgroundEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import text.foryou.data.FontColorEntity
 
 class EditorViewModel(app: Application): AndroidViewModel(app) {
 
@@ -23,6 +25,8 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
     var fontList = database?.fontColorDao()?.getAll()
     var fontStyleList = database?.fontStyleDao()?.getAll()
 
+    val fontColor = MutableLiveData<FontColorEntity>()
+
     fun getNoteById(noteId: Int) {
 
         viewModelScope.launch {
@@ -31,9 +35,10 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
                         if(noteId != NEW_NOTE_ID) {
                             database?.noteDao()?.getNoteById(noteId)
                         }
-                else{
+                        else{
                             NoteEntity()
                         }
+
                 currentNote.postValue(note)
             }
         }
@@ -93,7 +98,35 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
         return AdRequest.Builder().build()
     }
 
-    fun getContext(): Context {
-        return getApplication()
+    fun getSelectedFontColorPosition() {
+
+        val color = currentNote.value?.fontColor
+
+        Log.i("color_check", color.toString())
+
+        if(color != null) {
+
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+
+                val fc = database?.fontColorDao()?.getfontByColor(color)
+                fontColor.postValue(fc)
+
+                Log.i("firstcheck", "check")
+                }
+            }
+        }
+    }
+
+    fun returnFontColorPosition(): Int {
+
+        Log.i("lastcheck", "check")
+
+        if(fontColor.value?.id != null) {
+            return fontColor.value?.id!!
+        }
+
+        return 0
+
     }
 }

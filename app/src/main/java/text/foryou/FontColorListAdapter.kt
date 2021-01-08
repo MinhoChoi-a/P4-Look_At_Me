@@ -1,6 +1,8 @@
 package text.foryou
 
+import android.content.Context
 import android.content.res.Resources
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,10 +19,12 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
     private var checkedRBfont: CompoundButton? = null
     private var resources: Resources? = null
     private var packageName: String = ""
+    private var context: Context? = null
 
-    inner class ViewHolder(itemView: View):
+   inner class ViewHolder(itemView: View):
             RecyclerView.ViewHolder(itemView) {
-        val binding = ListFontcolorItemBinding.bind(itemView)
+
+       val binding = ListFontcolorItemBinding.bind(itemView)
 
     }
 
@@ -29,6 +33,7 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
         val view = inflater.inflate(R.layout.list_fontcolor_item, parent, false)
         resources = parent.context.resources
         packageName = parent.context.packageName
+        context = parent.context
 
         return ViewHolder(view)
     }
@@ -40,8 +45,8 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
 
         if(set.color.equals(note.value?.fontColor!!)) {
             holder.binding.fontColor.isChecked = true;
-            holder.binding.backColorback.setBackgroundResource(R.drawable.select)
             checkedRBfont = holder.binding.fontColor
+            holder.binding.backColorback.setBackgroundResource(R.drawable.select)
         }
 
         val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
@@ -74,4 +79,4 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
 
     override fun getItemCount() = fontColorList.size
 
-}
+ }

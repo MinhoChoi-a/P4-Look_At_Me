@@ -21,4 +21,6 @@ interface FontColorDAO {
     @Query("SELECT COUNT(*) from fontscolor")
     fun getCount(): Int
 
+    @Query("SELECT * FROM fontscolor where color = :color")
+    fun getfontByColor(color: String): FontColorEntity?
 }
