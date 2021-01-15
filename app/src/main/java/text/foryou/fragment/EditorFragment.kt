@@ -51,10 +51,10 @@ class EditorFragment: Fragment() {
 
         requireActivity().title =
                 if(args.noteid == NEW_NOTE_ID) {
-                    "New Note"
+                    "New Text Board"
                 }
                 else {
-                    "Edit Note"
+                    "Edit Text Board"
                 }
 
         viewModel = ViewModelProvider(this).get(EditorViewModel::class.java)

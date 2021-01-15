@@ -1,16 +1,45 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LookAtMe" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.LookAtMe" parent="Theme.MaterialComponents">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_200</item>
+        <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
-        <item name="colorSecondaryVariant">@color/teal_200</item>
+        <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowBackground">@drawable/intro</item>
+    </style>
+
+    <style name="mainTheme" parent="Theme.AppCompat">
+        <item name="android:windowBackground">@drawable/intro_grad</item>
+        <item name="actionBarTheme">@color/transparent</item>
+        <item name="colorPrimary">@color/trans</item>
+        <item name="colorPrimaryDark">@color/theme</item>
+        <item name="android:textColor">@color/snowwhite</item>
+        <item name="fontFamily">@font/montserrat</item>
+    </style>
+
+    <style name="AlertDialogCustom" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/black</item>
+        <item name="buttonBarNegativeButtonStyle">@style/AlertButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertButton</item>
+    </style>
+
+    <style name="AlertButton" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="background">@color/black</item>
+        <item name="colorAccent">@color/trans</item>
+    </style>
+
+
+    <style name="Theme.LookAtMe.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.LookAtMe.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

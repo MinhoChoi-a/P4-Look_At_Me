@@ -26,8 +26,8 @@
         android:checked="false"
         android:ellipsize="none"
         android:focusable="auto"
+        android:textColor="@color/black"
         android:padding="5dp"
-        android:background="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="button" />
 
