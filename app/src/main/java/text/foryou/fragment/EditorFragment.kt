@@ -86,7 +86,7 @@ class EditorFragment: Fragment() {
         })
 
         viewModel.selectedBackground?.observe(viewLifecycleOwner, Observer {
-            binding.recyclerViewBackStyle.layoutManager?.scrollToPosition(viewModel.returnBackPosition())
+            binding.recyclerViewBackStyle.layoutManager?.scrollToPosition(viewModel.returnBackPosition()-1)
         })
 
         viewModel.fontList?.observe(viewLifecycleOwner, Observer {
@@ -99,13 +99,19 @@ class EditorFragment: Fragment() {
         })
 
         viewModel.selectedFontColor?.observe(viewLifecycleOwner, Observer {
-            binding.recyclerViewFontColor.layoutManager?.scrollToPosition(viewModel.returnFontColorPosition())
+            binding.recyclerViewFontColor.layoutManager?.scrollToPosition(viewModel.returnFontColorPosition()-1)
         })
 
         viewModel.fontStyleList?.observe(viewLifecycleOwner, Observer {
             fontStyleAdapter = FontStyleListAdapter(it, viewModel.currentNote)
             binding.recyclerViewFontStyle.adapter = fontStyleAdapter
             binding.recyclerViewFontStyle.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+
+            viewModel.getSelectedFontStylePosition()
+        })
+
+        viewModel.selectedFontStyle?.observe(viewLifecycleOwner, Observer {
+            binding.recyclerViewFontStyle.layoutManager?.scrollToPosition(viewModel.returnFontStylePosition()-1)
         })
 
 

@@ -2,6 +2,7 @@ package text.foryou.data.dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
+import text.foryou.data.model.FontColorEntity
 import text.foryou.data.model.FontStyleEntity
 
 @Dao
@@ -21,5 +22,11 @@ interface FontStyleDAO {
 
     @Query("SELECT COUNT(*) from fontstyle")
     fun getCount(): Int
+
+    @Query("SELECT * FROM fontstyle where style = :style")
+    fun getfontStyleByStyle(style: String): FontStyleEntity?
+
+    @Query("SELECT id FROM fontstyle where style = :style")
+    fun getfontIdByStyle(style: String): Int
 
 }

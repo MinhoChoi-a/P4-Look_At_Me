@@ -147,7 +147,7 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
 
                     selectedBackground.postValue(rs)
 
-                    Log.i("firstcheck", "check")
+                    Log.i("firstcheck_back", "check")
                 }
             }
         }
@@ -155,10 +155,45 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
 
     fun returnBackPosition(): Int {
 
-        Log.i("lastcheck", "check")
+        Log.i("lastcheck_back", "check")
 
         if(selectedBackground.value?.id != null) {
             return selectedBackground.value?.id!!
+        }
+
+        return 0
+
+    }
+
+    fun getSelectedFontStylePosition() {
+
+        val style = currentNote.value?.fontStyle
+
+        Log.i("firstcheck_cc_style", style.toString())
+
+        if(style != null) {
+
+            viewModelScope.launch {
+                withContext(Dispatchers.IO) {
+
+                    val rs = database?.fontStyleDao()?.getfontStyleByStyle(style)
+
+                    selectedFontStyle.postValue(rs)
+
+                    Log.i("firstcheck_style", rs?.style.toString())
+                }
+            }
+        }
+    }
+
+    fun returnFontStylePosition(): Int {
+
+        Log.i("lastcheck__cc_style", selectedFontStyle.value?.id.toString())
+
+        if(selectedFontStyle.value?.id != null) {
+            return selectedFontStyle.value?.id!!
+
+            Log.i("lastcheck_style", "check")
         }
 
         return 0
