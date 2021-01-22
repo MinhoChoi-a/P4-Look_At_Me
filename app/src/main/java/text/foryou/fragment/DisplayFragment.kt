@@ -20,6 +20,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.InterstitialAd
+import com.google.android.gms.ads.LoadAdError
 import text.foryou.R
 import text.foryou.databinding.DisplayFragmentBinding
 import text.foryou.viewmodel.DisplayViewModel
@@ -31,9 +35,9 @@ class DisplayFragment: Fragment() {
 
     private lateinit var binding: DisplayFragmentBinding
 
-    var touched:Boolean = false
+    var touched: Boolean = false
 
-    private var checkedSwitch: CompoundButton? = null
+    private lateinit var mInterAd: InterstitialAd
 
     @SuppressLint("ResourceAsColor")
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -52,12 +56,14 @@ class DisplayFragment: Fragment() {
 
         binding = DisplayFragmentBinding.inflate(inflater, container, false)
 
+        createAndLoadInterAd()
+
         requireActivity().onBackPressedDispatcher.addCallback(
                 viewLifecycleOwner,
                 object : OnBackPressedCallback(true) {
 
                     override fun handleOnBackPressed() {
-                        returnToMain()
+                        returnToMain(mInterAd)
                     }
                 })
 
@@ -67,33 +73,29 @@ class DisplayFragment: Fragment() {
 
             binding.displayText.setText(it.text)
 
-            var font_style = resources.getIdentifier(it.fontStyle,"font", activity?.packageName)
+            var font_style = resources.getIdentifier(it.fontStyle, "font", activity?.packageName)
 
             binding.displayText.typeface = ResourcesCompat.getFont(viewModel.getContext().applicationContext, font_style)
 
-            var font_id = resources.getIdentifier(it.fontColor,"color", activity?.packageName)
+            var font_id = resources.getIdentifier(it.fontColor, "color", activity?.packageName)
 
             binding.displayText?.setTextColor(getColor(viewModel.getContext().applicationContext, font_id))
 
-            if(it.backType == 1) {
-                val simple_id = resources.getIdentifier(it.backRes,"drawable", activity?.packageName)
+            if (it.backType == 1) {
+                val simple_id = resources.getIdentifier(it.backRes, "drawable", activity?.packageName)
                 binding.displayBack?.setBackgroundResource(simple_id)
-            }
+            } else if (it.backType == 2) {
 
-            else if(it.backType == 2) {
-
-                val grad_id = resources.getIdentifier(it.backRes,"drawable", activity?.packageName)
+                val grad_id = resources.getIdentifier(it.backRes, "drawable", activity?.packageName)
                 binding.displayBack?.setBackgroundResource(grad_id)
                 val animDrawable = binding.displayBack?.background as AnimationDrawable
 
                 animDrawable.setEnterFadeDuration(10)
                 animDrawable.setExitFadeDuration(5000)
                 animDrawable.start()
-            }
+            } else {
 
-            else {
-
-                val video_id = resources.getIdentifier(it.backRes,"raw", activity?.packageName)
+                val video_id = resources.getIdentifier(it.backRes, "raw", activity?.packageName)
                 binding.displayBack?.setBackgroundResource(R.drawable.back_transparent)
                 val videoView = binding.displayBackVideo as VideoView
                 videoView.setOnPreparedListener { mp -> mp.isLooping = true }
@@ -108,18 +110,17 @@ class DisplayFragment: Fragment() {
         })
 
         binding.closeBtn?.setOnClickListener {
-            returnToMain()
+            returnToMain(mInterAd)
         }
 
         val checkedChangeListener = CompoundButton.OnCheckedChangeListener { compoundButton, isChecked ->
 
-            if(isChecked) {
+            if (isChecked) {
                 AnimationUtils.loadAnimation(context, R.anim.blink).also { animation ->
                     binding.displayText.startAnimation(animation)
                 }
                 //
-            }
-            else {
+            } else {
                 binding.displayText.clearAnimation()
             }
         }
@@ -131,7 +132,8 @@ class DisplayFragment: Fragment() {
         return binding.root
     }
 
-    private fun returnToMain(): Boolean {
+    private fun returnToMain(intAd: InterstitialAd): Boolean {
+        intAd.show()
         findNavController().navigateUp()
         return true
     }
@@ -140,25 +142,55 @@ class DisplayFragment: Fragment() {
         view.setOnTouchListener(object : View.OnTouchListener {
             override fun onTouch(v: View?, event: MotionEvent): Boolean {
 
-                if(event.action == MotionEvent.ACTION_DOWN) {
+                if (event.action == MotionEvent.ACTION_DOWN) {
 
-                if(!touched) {
-                    binding.closeBtn?.setVisibility(View.VISIBLE)
-                    binding.blinkSwitch?.setVisibility(View.VISIBLE)
+                    if (!touched) {
+                        binding.closeBtn?.setVisibility(View.VISIBLE)
+                        binding.blinkSwitch?.setVisibility(View.VISIBLE)
 
-                    touched=true
+                        touched = true
+                    } else {
+                        binding.closeBtn?.setVisibility(View.INVISIBLE)
+                        binding.blinkSwitch?.setVisibility(View.INVISIBLE)
+
+                        touched = false
+
+                    }
                 }
-
-                else{
-                    binding.closeBtn?.setVisibility(View.INVISIBLE)
-                    binding.blinkSwitch?.setVisibility(View.INVISIBLE)
-
-                    touched=false
-
-                }
-            }
                 return true
             }
         })
+    }
+
+    private fun createAndLoadInterAd() {
+        mInterAd = viewModel.loadInterAd()
+        mInterAd.adUnitId = "ca-app-pub-3940256099942544/1033173712"
+        mInterAd.loadAd(AdRequest.Builder().build())
+        mInterAd.adListener = object : AdListener() {
+
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+            }
+
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                // Code to be executed when an ad request fails.
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when the ad is displayed.
+            }
+
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdLeftApplication() {
+                // Code to be executed when the user has left the app.
+            }
+
+            override fun onAdClosed() {
+
+            }
+        }
     }
 }

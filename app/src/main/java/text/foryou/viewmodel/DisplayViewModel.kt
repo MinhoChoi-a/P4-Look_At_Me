@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.ads.InterstitialAd
 import text.foryou.data.AppDatabase
 import text.foryou.data.model.NoteEntity
 import kotlinx.coroutines.Dispatchers
@@ -16,6 +17,8 @@ class DisplayViewModel(app: Application): AndroidViewModel(app) {
 
     private val database = AppDatabase.getInstance(app)
     val currentNote = MutableLiveData<NoteEntity>()
+
+    private lateinit var mInterestAd: InterstitialAd
 
     fun getNoteById(noteId: Int) {
 
@@ -36,5 +39,10 @@ class DisplayViewModel(app: Application): AndroidViewModel(app) {
     fun getContext(): Context {
         return getApplication()
     }
+
+    fun loadInterAd(): InterstitialAd {
+        return InterstitialAd(getApplication())
+    }
+
 
 }

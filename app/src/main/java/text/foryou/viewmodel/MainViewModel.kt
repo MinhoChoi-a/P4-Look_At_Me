@@ -22,8 +22,6 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
 
     val noteList = database?.noteDao()?.getAll()
 
-    private lateinit var mInterestAd: InterstitialAd
-
     fun deleteNotes(selectedNotes: ArrayList<NoteEntity>) {
 
         viewModelScope.launch {
@@ -32,7 +30,7 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
             }
         }
     }
-
+    /*
     fun addDefaultSet() {
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
@@ -60,34 +58,12 @@ class MainViewModel(app: Application) : AndroidViewModel(app) {
                     database?.fontStyleDao()?.insertAll(defaultFontStyle) }
             }
         }
-    }
-
-    fun checkSize():Int {
-        var noteSize:Int =  noteList?.value?.size ?: 0
-        return noteSize
-    }
+    }*/
 
     fun requestAd():AdRequest {
         MobileAds.initialize(getApplication())
         return AdRequest.Builder().build()
     }
-
-    fun loadRewardAd(): RewardedAd {
-        return RewardedAd(getApplication(), "")
-    }
-
-    fun loadInterAd(): InterstitialAd {
-        return InterstitialAd(getApplication())
-    }
-
-    fun getContext(): Context {
-        return getApplication()
-    }
-
-    fun setToast(message: String) {
-        Toast.makeText(getApplication(), message, Toast.LENGTH_LONG).show()
-    }
-
 
 
 }

@@ -1,3 +1,5 @@
+//we can use this file for the admob ID
+
 package text.foryou
 
 const val NEW_NOTE_ID = 0

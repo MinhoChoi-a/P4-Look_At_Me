@@ -73,7 +73,7 @@ class EditorFragment: Fragment() {
                 object : OnBackPressedCallback(true) {
 
                     override fun handleOnBackPressed() {
-                        saveAndReturn()
+                        findNavController().navigateUp()
                     }
                 })
 
