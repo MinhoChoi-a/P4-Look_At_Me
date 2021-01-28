@@ -15,7 +15,7 @@ import text.foryou.data.model.FontColorEntity
 import text.foryou.data.model.FontStyleEntity
 import text.foryou.data.model.NoteEntity
 
-@Database(entities=[NoteEntity::class, BackgroundEntity::class, FontColorEntity::class, FontStyleEntity::class],version=1, exportSchema = false)
+@Database(entities=[NoteEntity::class, BackgroundEntity::class, FontColorEntity::class, FontStyleEntity::class],version=2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
     abstract fun noteDao(): NoteDAO?
@@ -38,11 +38,9 @@ abstract class AppDatabase: RoomDatabase() {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
-                        "updateTest2.db"
+                        "LookAtMe1211.db"
                     )
-                        //.addMigrations(MIGRATION_1_2)
-                        //.setQueryExecutor()
-
+                        .addMigrations(MIGRATION_1_2)
                         .addCallback(object: Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)

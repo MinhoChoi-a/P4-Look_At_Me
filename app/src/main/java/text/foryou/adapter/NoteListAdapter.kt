@@ -41,28 +41,9 @@ class NoteListAdapter(private val noteList: List<NoteEntity>, private val listen
                 listener.playNote(note.id)
             }
 
-
-/**
-            clickButtonToDelete.setOnClickListener {
-                if(selectedNotes.contains(note)) {
-                    selectedNotes.remove(note)
-                    clickButtonToDelete.setImageResource(R.drawable.ic_note)
-                }
-                else{
-                    selectedNotes.add(note)
-                    clickButtonToDelete.setImageResource(R.drawable.ic_check)
-                }
-
-                listener.onItemSelectionChanged()
+            clickToEdit.setOnClickListener {
+                listener.editNote(note.id)
             }
-
-            clickButtonToDelete.setImageResource(
-                    if(selectedNotes.contains(note)) {
-                        R.drawable.ic_check
-                    }
-                    else {
-                        R.drawable.ic_note
-                    })*/
         }
     }
 

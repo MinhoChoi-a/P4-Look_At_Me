@@ -74,6 +74,8 @@ class MainFragment: Fragment(), NoteListAdapter.ListItemListener {
             addNote(NEW_NOTE_ID)
         }
 
+
+
         return binding.root
     }
 
