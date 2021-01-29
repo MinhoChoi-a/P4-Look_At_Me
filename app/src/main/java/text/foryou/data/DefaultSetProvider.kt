@@ -18,7 +18,13 @@ class DefaultSetProvider {
                 BackgroundEntity(2, "Warm Heart", "back_grad3", "back_grad3_start"),
                 BackgroundEntity(3, "Snow Flakes", "snowflakes", "snowflakes"),
                 BackgroundEntity(3, "Fire Work", "fireworks", "firework"),
-                BackgroundEntity(3, "Flames", "flames", "flame")
+                BackgroundEntity(3, "Flames", "flames", "flame"),
+
+                BackgroundEntity(3, "Pink Heart", "heart", "heart"),
+                BackgroundEntity(3, "Neon Line", "neon", "neon"),
+                BackgroundEntity(3, "Heart Blossom", "neon", "neon"),
+                BackgroundEntity(3, "Golden Age", "golden", "golden")
+
         )
 
         fun getFontColor() = arrayListOf(

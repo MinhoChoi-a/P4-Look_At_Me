@@ -71,7 +71,11 @@ class BackgroundListAdapter(private val backgroundList: List<BackgroundEntity>, 
             backColor.setBackgroundResource(id ?: R.drawable.back_transparent)
 
             if(set.type==3) {
-                backColor.setTextColor(getColor(context, R.color.white))
+
+                if(!set.res.equals("heart")) {
+                    backColor.setTextColor(getColor(context, R.color.white))
+                }
+
             }
         }
     }

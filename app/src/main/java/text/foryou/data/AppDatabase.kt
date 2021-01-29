@@ -28,7 +28,13 @@ abstract class AppDatabase: RoomDatabase() {
         private var INSTANCE: AppDatabase?= null
 
         val MIGRATION_1_2 = object: Migration(1,2) {
-            override fun migrate(database: SupportSQLiteDatabase) {}
+            override fun migrate(database: SupportSQLiteDatabase) {
+
+                database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Pink Heart', 'heart', 'heart')")
+                database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Neon Line', 'neon', 'neon')")
+                database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Heart Blossom', 'blossom', 'blossom')")
+                database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Golden Age ', 'golden', 'golden')")
+            }
         }
 
         fun getInstance(context: Context): AppDatabase? {
