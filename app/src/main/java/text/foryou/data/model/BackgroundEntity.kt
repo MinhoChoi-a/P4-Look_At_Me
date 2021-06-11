@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import text.foryou.NEW_SET_ID
 import kotlinx.android.parcel.Parcelize
 
+//Parcelize: better way to serialize data on inter process communication
 @Parcelize
 @Entity(tableName = "settings")
 data class BackgroundEntity(
@@ -17,7 +18,6 @@ data class BackgroundEntity(
         var backImage: String?
 
 ) : Parcelable {
-    constructor(): this(NEW_SET_ID,0,"","","")
     constructor(type:Int, title:String, res: String, image:String): this(NEW_SET_ID,type,title,res,image)
 
 }

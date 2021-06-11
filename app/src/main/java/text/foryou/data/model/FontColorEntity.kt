@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import text.foryou.NEW_FONT_ID
 import kotlinx.android.parcel.Parcelize
 
+//Parcelize: better way to serialize data on inter process communication
 @Parcelize
 @Entity(tableName = "fontscolor")
 class FontColorEntity (
@@ -16,6 +17,6 @@ class FontColorEntity (
 
 ) : Parcelable {
     constructor(): this(NEW_FONT_ID,"", "")
-    constructor(color:String, name:String): this(NEW_FONT_ID,color, name)
+    constructor(color:String, name:String): this(NEW_FONT_ID, color, name)
 
 }

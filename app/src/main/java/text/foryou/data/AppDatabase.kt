@@ -15,6 +15,8 @@ import text.foryou.data.model.FontColorEntity
 import text.foryou.data.model.FontStyleEntity
 import text.foryou.data.model.NoteEntity
 
+
+//Database constructor using RoomDatabase
 @Database(entities=[NoteEntity::class, BackgroundEntity::class, FontColorEntity::class, FontStyleEntity::class],version=2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
 
@@ -23,13 +25,14 @@ abstract class AppDatabase: RoomDatabase() {
     abstract fun fontColorDao(): FontColorDAO?
     abstract fun fontStyleDao(): FontStyleDAO?
 
+    //singleton object which is not tied to the instance of the class
     companion object {
 
         private var INSTANCE: AppDatabase?= null
 
+        //add(insert) updated data to the user's room data using Migration
         val MIGRATION_1_2 = object: Migration(1,2) {
             override fun migrate(database: SupportSQLiteDatabase) {
-
                 database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Pink Heart', 'heart', 'heart')")
                 database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Neon Line', 'neon', 'neon')")
                 database.execSQL("INSERT INTO settings (type, title, res, backImage) VALUES (3, 'Heart Blossom', 'blossom', 'blossom')")
@@ -37,16 +40,19 @@ abstract class AppDatabase: RoomDatabase() {
             }
         }
 
+        //load database
         fun getInstance(context: Context): AppDatabase? {
 
+            //when the database loaded initially
             if(INSTANCE == null) {
                 synchronized(AppDatabase::class) {
+
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
                         "LookAtMe1211.db"
                     )
-                        .addMigrations(MIGRATION_1_2)
+                        //create data table for the first time
                         .addCallback(object: Callback() {
                             override fun onCreate(db: SupportSQLiteDatabase) {
                                 super.onCreate(db)
@@ -60,15 +66,11 @@ abstract class AppDatabase: RoomDatabase() {
 
                             }
                         })
+                        .addMigrations(MIGRATION_1_2) //check the version of data and do migration step
                         .build()
                 }
             }
-
             return INSTANCE
         }
     }
-
-
-
-
 }

@@ -15,11 +15,15 @@ import text.foryou.NEW_NOTE_ID
 
 class DisplayViewModel(app: Application): AndroidViewModel(app) {
 
+    //load database
     private val database = AppDatabase.getInstance(app)
+
+    //find the current note
     val currentNote = MutableLiveData<NoteEntity>()
 
     private lateinit var mInterestAd: InterstitialAd
 
+    //find note data by id
     fun getNoteById(noteId: Int) {
 
         viewModelScope.launch {
@@ -36,10 +40,12 @@ class DisplayViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    //to use the resource file of the application
     fun getContext(): Context {
         return getApplication()
     }
 
+    //load interstitial Ad
     fun loadInterAd(): InterstitialAd {
         return InterstitialAd(getApplication())
     }

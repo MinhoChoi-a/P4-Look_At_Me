@@ -7,7 +7,6 @@ import text.foryou.data.model.NoteEntity
 
 class DefaultSetProvider {
 
-    //working like static values in java
     companion object {
 
         fun getSettings() = arrayListOf(
@@ -22,13 +21,11 @@ class DefaultSetProvider {
 
                 BackgroundEntity(3, "Pink Heart", "heart", "heart"),
                 BackgroundEntity(3, "Neon Line", "neon", "neon"),
-                BackgroundEntity(3, "Heart Blossom", "neon", "neon"),
+                BackgroundEntity(3, "Heart Blossom", "blossom", "blossom"),
                 BackgroundEntity(3, "Golden Age", "golden", "golden")
-
         )
 
         fun getFontColor() = arrayListOf(
-
                 FontColorEntity("black", "Black"),
                 FontColorEntity("white", "White"),
                 FontColorEntity("second_c", "Yellow"),
@@ -44,7 +41,6 @@ class DefaultSetProvider {
 
 
         fun getFontStyle() = arrayListOf(
-
                 FontStyleEntity("robotoblack", "Roboto"),
                 FontStyleEntity("annietelescope", "Annie Telescope"),
                 FontStyleEntity("dancingscript", "Dancing Script"),

@@ -18,7 +18,7 @@ interface FontStyleDAO {
     fun getAll(): LiveData<List<FontStyleEntity>>
 
     @Query("SELECT * FROM fontstyle WHERE id = :id")
-    fun getfontStyleById(id: Int): FontStyleEntity? //it is nullable
+    fun getfontStyleById(id: Int): FontStyleEntity?
 
     @Query("SELECT COUNT(*) from fontstyle")
     fun getCount(): Int

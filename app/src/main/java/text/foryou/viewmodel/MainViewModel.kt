@@ -1,69 +1,22 @@
 package text.foryou.viewmodel
 
 import android.app.Application
-import android.content.Context
-import android.widget.Toast
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.viewModelScope
 import text.foryou.data.AppDatabase
-import text.foryou.data.DefaultSetProvider
-import text.foryou.data.model.NoteEntity
 import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.InterstitialAd
 import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.rewarded.RewardedAd
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
+//ViewModel: bind and control data
 class MainViewModel(app: Application) : AndroidViewModel(app) {
 
+    //load database
     private val database = AppDatabase.getInstance(app)
 
+    //get list of notes
     val noteList = database?.noteDao()?.getAll()
-
-    fun deleteNotes(selectedNotes: ArrayList<NoteEntity>) {
-
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                database?.noteDao()?.deleteNotes(selectedNotes)
-            }
-        }
-    }
-    /*
-    fun addDefaultSet() {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-
-                val countNote = database?.noteDao()?.getCount()
-                val countNum = database?.setDao()?.getCount()
-                val countNumFonts = database?.fontColorDao()?.getCount()
-                val countNumFontStyle = database?.fontStyleDao()?.getCount()
-
-                val defaultSets = DefaultSetProvider.getSettings()
-                val defaultFontStyle = DefaultSetProvider.getFontStyle()
-                val defaultFonts = DefaultSetProvider.getFontColor()
-                val defaultNotes = DefaultSetProvider.getNotes()
-
-                if(countNote == 0) {
-                    database?.noteDao()?.insertAll(defaultNotes) }
-
-                if(countNum == 0) {
-                database?.setDao()?.insertAll(defaultSets) }
-
-                if(countNumFonts == 0) {
-                    database?.fontColorDao()?.insertAll(defaultFonts) }
-
-                if(countNumFontStyle == 0) {
-                    database?.fontStyleDao()?.insertAll(defaultFontStyle) }
-            }
-        }
-    }*/
 
     fun requestAd():AdRequest {
         MobileAds.initialize(getApplication())
         return AdRequest.Builder().build()
     }
-
-
 }

@@ -6,6 +6,7 @@ import androidx.room.PrimaryKey
 import text.foryou.NEW_NOTE_ID
 import kotlinx.android.parcel.Parcelize
 
+//Parcelize: better way to serialize data on inter process communication
 @Parcelize
 @Entity(tableName = "notes")
 data class NoteEntity(
@@ -19,7 +20,6 @@ data class NoteEntity(
     var backRes: String
 
 ) : Parcelable {
-
     constructor(): this(NEW_NOTE_ID,"","","", 0, "")
     constructor(text:String, fs:String, fc:String, bt:Int, br:String): this(NEW_NOTE_ID,text,fs,fc,bt,br)
 }

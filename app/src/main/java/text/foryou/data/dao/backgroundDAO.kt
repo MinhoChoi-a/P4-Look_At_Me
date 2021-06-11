@@ -18,10 +18,10 @@ interface backgroundDAO {
     fun getAll(): LiveData<List<BackgroundEntity>>
 
     @Query("SELECT * FROM settings WHERE id = :id")
-    fun getSetById(id: Int): BackgroundEntity? //it is nullable
+    fun getSetById(id: Int): BackgroundEntity?
 
     @Query("SELECT * FROM settings WHERE res = :res")
-    fun getSetByRes(res: String): BackgroundEntity? //it is nullable
+    fun getSetByRes(res: String): BackgroundEntity?
 
     @Query("SELECT COUNT(*) FROM settings")
     fun getCount(): Int?

@@ -21,18 +21,21 @@ import text.foryou.data.model.FontStyleEntity
 class EditorViewModel(app: Application): AndroidViewModel(app) {
 
     private val database = AppDatabase.getInstance(app)
-    val currentNote = MutableLiveData<NoteEntity>()
+
     var setList = database?.setDao()?.getAll()
     var fontList = database?.fontColorDao()?.getAll()
     var fontStyleList = database?.fontStyleDao()?.getAll()
 
+    //MutableLiveData: this can react on OnChanged event
+    val currentNote = MutableLiveData<NoteEntity>()
     val selectedFontColor = MutableLiveData<FontColorEntity>()
     val selectedBackground = MutableLiveData<BackgroundEntity>()
     val selectedFontStyle = MutableLiveData<FontStyleEntity>()
 
-
+    //get note data with the ID
     fun getNoteById(noteId: Int) {
 
+        //using coroutine scope, this process will be working on this ViewModel(Editor) only
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val note =
@@ -42,16 +45,20 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
                         else{
                             NoteEntity()
                         }
-
-                currentNote.postValue(note)
+                currentNote.postValue(note) //store value using thread. This is available on MutableLiveData
             }
         }
     }
 
+    //update the note data(mutableLiveData) and database
     fun updateNote() {
+
+        //let: invoke one or more functions on results of all chains
         currentNote.value?.let {
+
             it.text = it.text.trim()
 
+            //if data is empty, then do nothing
             if(it.id == NEW_NOTE_ID && it.text.isEmpty()) {
                 return
             }
@@ -69,8 +76,8 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    //delete note
     fun deleteNote(note: NoteEntity) {
-
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 database?.noteDao()?.deleteNote(note)
@@ -78,98 +85,77 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
         }
     }
 
+    //set and display the message of toast
     fun setToast(message: String) {
         Toast.makeText(getApplication(), message, Toast.LENGTH_LONG).show()
     }
 
-
+    //find whole data for the Note entity
     fun findSetAndAddToNote(setId: Int) {
 
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 val background: BackgroundEntity? = database?.setDao()?.getSetById(setId)
-
                 currentNote.value?.backRes = background?.res!!.toString()
                 currentNote.value?.backType = background?.type!!.toInt()
-
                 updateNote()
             }
         }
     }
 
-    fun requestAd(): AdRequest {
-        MobileAds.initialize(getApplication())
-        return AdRequest.Builder().build()
-    }
-
+    //find the position number of the stored font color
     fun getSelectedFontColorPosition() {
 
         val color = currentNote.value?.fontColor
-
-        Log.i("color_check", color.toString())
-
+        //Log.i("color_check", color.toString())
         if(color != null) {
-
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
-
                 val fc = database?.fontColorDao()?.getfontByColor(color)
                 selectedFontColor.postValue(fc)
-
-                Log.i("firstcheck", "check")
                 }
             }
         }
     }
 
+    //return the position of the selected font color
     fun returnFontColorPosition(): Int {
-
-        Log.i("lastcheck", "check")
 
         if(selectedFontColor.value?.id != null) {
             return selectedFontColor.value?.id!!
         }
-
         return 0
 
     }
 
+    //find the position number of the stored background
     fun getSelectedBackPosition() {
 
         val res = currentNote.value?.backRes
-
         if(res != null) {
-
             viewModelScope.launch {
                 withContext(Dispatchers.IO) {
-
                     val rs = database?.setDao()?.getSetByRes(res)
-
                     selectedBackground.postValue(rs)
-
-                    Log.i("firstcheck_back", "check")
                 }
             }
         }
     }
 
+    //return the position of the selected background
     fun returnBackPosition(): Int {
-
-        Log.i("lastcheck_back", "check")
 
         if(selectedBackground.value?.id != null) {
             return selectedBackground.value?.id!!
         }
-
         return 0
 
     }
 
+    //find the position number of the stored font style
     fun getSelectedFontStylePosition() {
 
         val style = currentNote.value?.fontStyle
-
-        Log.i("firstcheck_cc_style", style.toString())
 
         if(style != null) {
 
@@ -177,26 +163,24 @@ class EditorViewModel(app: Application): AndroidViewModel(app) {
                 withContext(Dispatchers.IO) {
 
                     val rs = database?.fontStyleDao()?.getfontStyleByStyle(style)
-
                     selectedFontStyle.postValue(rs)
-
-                    Log.i("firstcheck_style", rs?.style.toString())
                 }
             }
         }
     }
 
+    //return the position of the selected font style
     fun returnFontStylePosition(): Int {
-
-        Log.i("lastcheck__cc_style", selectedFontStyle.value?.id.toString())
 
         if(selectedFontStyle.value?.id != null) {
             return selectedFontStyle.value?.id!!
-
-            Log.i("lastcheck_style", "check")
         }
-
         return 0
+    }
 
+    //request ad
+    fun requestAd(): AdRequest {
+        MobileAds.initialize(getApplication())
+        return AdRequest.Builder().build()
     }
 }
