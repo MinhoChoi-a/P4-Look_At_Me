@@ -28,6 +28,8 @@ abstract class AppDatabase: RoomDatabase() {
     //singleton object which is not tied to the instance of the class
     companion object {
 
+        var TEST_MODE = false
+
         private var INSTANCE: AppDatabase?= null
 
         //add(insert) updated data to the user's room data using Migration
@@ -46,7 +48,6 @@ abstract class AppDatabase: RoomDatabase() {
             //when the database loaded initially
             if(INSTANCE == null) {
                 synchronized(AppDatabase::class) {
-
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         AppDatabase::class.java,
@@ -63,7 +64,6 @@ abstract class AppDatabase: RoomDatabase() {
                                     getInstance(context)?.fontStyleDao()?.insertAll(DefaultSetProvider.getFontStyle())
                                     getInstance(context)?.noteDao()?.insertAll(DefaultSetProvider.getNotes())
                                 }
-
                             }
                         })
                         .addMigrations(MIGRATION_1_2) //check the version of data and do migration step

@@ -23,7 +23,6 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
 
     private var resources: Resources? = null
     private var packageName: String = ""
-    private var context: Context? = null
 
     //inner class: it will do coupling between NoteListAdapter each item of List for the RecyclerView
     //ViewHolder describes an item view
@@ -41,7 +40,6 @@ class FontColorListAdapter(private val fontColorList: List<FontColorEntity>, pri
         //get the info of the current context => to use the app's stored resource
         resources = parent.context.resources
         packageName = parent.context.packageName
-        context = parent.context
 
         return ViewHolder(view)
     }
